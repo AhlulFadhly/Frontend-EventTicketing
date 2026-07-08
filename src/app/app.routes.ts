@@ -6,9 +6,7 @@ import { DashboardLayout } from './layouts/dashboard-layout/dashboard-layout';
 import { authGuard } from './core/guards/auth-guard';
 import { roleGuard } from './core/guards/role-guard';
 
-
 export const routes: Routes = [
-
   // PUBLIC
   {
     path: '',
@@ -16,12 +14,9 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: () =>
-          import('./features/public/public.routes').then(
-            m => m.PUBLIC_ROUTES
-          )
-      }
-    ]
+        loadChildren: () => import('./features/public/public.routes').then((m) => m.PUBLIC_ROUTES),
+      },
+    ],
   },
 
   // AUTH
@@ -31,26 +26,19 @@ export const routes: Routes = [
     children: [
       {
         path: 'login',
-        loadComponent: () =>
-          import('./features/auth/login/login').then(
-            m => m.Login
-          )
+        loadComponent: () => import('./features/auth/login/login').then((m) => m.Login),
       },
       {
         path: 'register',
         loadComponent: () =>
-          import('./features/auth/register-user/register-user').then(
-            m => m.RegisterUser
-          )
+          import('./features/auth/register-user/register-user').then((m) => m.RegisterUser),
       },
       {
         path: 'register-organizer',
         loadComponent: () =>
-          import('./features/auth/register-organizer/register-organizer').then(
-            m => m.RegisterOrganizer
-          )
-      }
-    ]
+          import('./features/auth/register-user/register-user').then((m) => m.RegisterUser),
+      },
+    ],
   },
 
   // ADMIN
@@ -59,17 +47,14 @@ export const routes: Routes = [
     component: DashboardLayout,
     canActivate: [authGuard, roleGuard],
     data: {
-      roles: ['ADMIN']
+      roles: ['ADMIN'],
     },
     children: [
       {
         path: '',
-        loadChildren: () =>
-          import('./features/admin/admin.routes').then(
-            m => m.ADMIN_ROUTES
-          )
-      }
-    ]
+        loadChildren: () => import('./features/admin/admin.routes').then((m) => m.ADMIN_ROUTES),
+      },
+    ],
   },
 
   // ORGANIZER
@@ -78,17 +63,15 @@ export const routes: Routes = [
     component: DashboardLayout,
     canActivate: [authGuard, roleGuard],
     data: {
-      roles: ['ORGANIZER']
+      roles: ['ORGANIZER'],
     },
     children: [
       {
         path: '',
         loadChildren: () =>
-          import('./features/organizer/organizer.routes').then(
-            m => m.ORGANIZER_ROUTES
-          )
-      }
-    ]
+          import('./features/organizer/organizer.routes').then((m) => m.ORGANIZER_ROUTES),
+      },
+    ],
   },
 
   // USER
@@ -97,22 +80,18 @@ export const routes: Routes = [
     component: DashboardLayout,
     canActivate: [authGuard, roleGuard],
     data: {
-      roles: ['USER']
+      roles: ['USER'],
     },
     children: [
       {
         path: '',
-        loadChildren: () =>
-          import('./features/user/user.routes').then(
-            m => m.USER_ROUTES
-          )
-      }
-    ]
+        loadChildren: () => import('./features/user/user.routes').then((m) => m.USER_ROUTES),
+      },
+    ],
   },
 
   {
     path: '**',
-    redirectTo: ''
-  }
-
+    redirectTo: '',
+  },
 ];

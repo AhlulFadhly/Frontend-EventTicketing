@@ -16,7 +16,19 @@
             <span>Premium Access</span>
           </div>
           <h1 class="promo-panel__title">
-            Experience Events<br><span class="text-gradient">Like Never Before</span>
+            {{
+            isOrganizer
+            ? 'Host Amazing Events'
+            : 'Experience Events'
+            }}
+            <br>
+            <span class="text-gradient">
+              {{
+              isOrganizer
+              ? 'With Your Community'
+              : 'Like Never Before'
+              }}
+            </span>
           </h1>
           <p class="promo-panel__subtitle">
             Discover concerts, conferences, festivals, workshops, and unforgettable experiences with one modern platform
@@ -66,11 +78,19 @@
             <mat-icon class="brand-icon">bubble_chart</mat-icon>
             <span class="brand-name">AURA</span>
           </div>
-          <h2 class="auth-card__title">Create Account</h2>
-          <p class="auth-card__subtitle">Join the exclusive network of premium events.</p>
+          <h2 class="auth-card__title">
+            {{ isOrganizer ? 'Become an Organizer' : 'Create Account' }}
+          </h2>
+          <p class="auth-card__subtitle">
+            {{
+            isOrganizer
+            ? 'Start creating and managing amazing events.'
+            : 'Join the exclusive network of premium events.'
+            }}
+          </p>
         </div>
 
-        <form class="auth-form" [formGroup]="registerForm"(ngSubmit)="register()">
+        <form class="auth-form" [formGroup]="registerForm" (ngSubmit)="register()">
 
           <div class="input-group">
             <label class="input-group__label">Full Name</label>
@@ -100,7 +120,8 @@
             <label class="input-group__label">Password</label>
             <div class="input-field">
               <mat-icon class="input-field__icon">lock</mat-icon>
-              <input [type]="hidePassword ? 'password' : 'text'" class="input-field__input" placeholder="••••••••" formControlName="password">
+              <input [type]="hidePassword ? 'password' : 'text'" class="input-field__input" placeholder="••••••••"
+                formControlName="password">
               <button type="button" class="input-field__toggle" (click)="hidePassword = !hidePassword">
                 <mat-icon>{{ hidePassword ? 'visibility' : 'visibility_off' }}</mat-icon>
               </button>
@@ -119,7 +140,9 @@
           </div>
 
           <button type="submit" class="btn-submit">
-            <span>Create Account</span>
+            <span>
+              {{ isOrganizer ? 'Create Organizer Account' : 'Create Account' }}
+            </span>
           </button>
         </form>
 

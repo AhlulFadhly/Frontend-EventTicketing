@@ -35,7 +35,7 @@ export class AuthService {
 
   registerOrganizer(request: RegisterOrganizerRequest): Observable<ApiResponse<void>> {
     return this.http.post<ApiResponse<void>>(
-      `${this.baseUrl}${API.AUTH}/register-organizer`,
+      `${this.baseUrl}${API.AUTH}/register/organizer`,
       request,
     );
   }

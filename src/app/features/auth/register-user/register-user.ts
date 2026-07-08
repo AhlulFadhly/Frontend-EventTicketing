@@ -1,20 +1,24 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   FormBuilder,
   ReactiveFormsModule,
   Validators
 } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import {
+  ActivatedRoute,
+  Router,
+  RouterLink
+} from '@angular/router';
 
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { AuthService } from '../services/auth.service';
 import { MatIconModule } from '@angular/material/icon';
 
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-register-user',
@@ -33,11 +37,12 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './register-user.html',
   styleUrl: './register-user.scss'
 })
-export class RegisterUser {
+export class RegisterUser implements OnInit {
 
   private fb = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
   private snackBar = inject(MatSnackBar);
 
   hidePassword = true;
@@ -45,12 +50,20 @@ export class RegisterUser {
 
   loading = false;
 
+  // true jika membuka /register-organizer
+  isOrganizer = false;
+
   registerForm = this.fb.nonNullable.group({
     fullName: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
     phone: ['', Validators.required],
     password: ['', [Validators.required, Validators.minLength(6)]]
   });
+
+  ngOnInit(): void {
+    this.isOrganizer =
+      this.route.snapshot.routeConfig?.path === 'register-organizer';
+  }
 
   register(): void {
 
@@ -61,40 +74,51 @@ export class RegisterUser {
 
     this.loading = true;
 
-    this.authService.registerUser(this.registerForm.getRawValue())
-      .subscribe({
+    const request = this.registerForm.getRawValue();
 
-        next: (response) => {
+    const registerRequest = this.isOrganizer
+      ? this.authService.registerOrganizer(request)
+      : this.authService.registerUser(request);
 
-          this.loading = false;
+    registerRequest.subscribe({
 
-          this.snackBar.open(
-            response.message ?? 'Register berhasil',
-            'Tutup',
-            {
-              duration: 3000
-            }
-          );
+      next: (response) => {
 
-          this.router.navigate(['/login']);
+        this.loading = false;
 
-        },
+        this.snackBar.open(
+          response.message ??
+            (this.isOrganizer
+              ? 'Organizer berhasil didaftarkan'
+              : 'Register berhasil'),
+          'Tutup',
+          {
+            duration: 3000
+          }
+        );
 
-        error: (err) => {
+        this.router.navigate(['/login']);
 
-          this.loading = false;
+      },
 
-          this.snackBar.open(
-            err.error?.message ?? 'Register gagal',
-            'Tutup',
-            {
-              duration: 3000
-            }
-          );
+      error: (err) => {
 
-        }
+        this.loading = false;
 
-      });
+        this.snackBar.open(
+          err.error?.message ??
+            (this.isOrganizer
+              ? 'Register organizer gagal'
+              : 'Register gagal'),
+          'Tutup',
+          {
+            duration: 3000
+          }
+        );
+
+      }
+
+    });
 
   }
 
