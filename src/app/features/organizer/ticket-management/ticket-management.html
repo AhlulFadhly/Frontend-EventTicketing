@@ -1,0 +1,23 @@
+<div class="sub-view">
+  <div class="sub-view__header">
+    <h3>Ticket Pricing Structures</h3>
+    <button class="btn-create btn-create--small" (click)="onAddTicket.emit()">
+      <mat-icon>add</mat-icon><span>Add Tier</span>
+    </button>
+  </div>
+  <div class="ticket-management-grid">
+    <div class="mini-ticket-card" *ngFor="let ticket of tickets" [class.mini-ticket-card--vip]="ticket.isVip">
+      <div class="mini-ticket-card__header">
+        <h4>{{ ticket.name }} Tier</h4>
+        <span class="price">IDR {{ ticket.price }}</span>
+      </div>
+      <p class="quota-text">Remaining Quota: {{ ticket.remaining }} / {{ ticket.quota }} seats</p>
+      <div class="mini-ticket-card__actions">
+        <button class="btn-edit-ticket" (click)="onEditTicket.emit(ticket)">
+          <mat-icon>edit</mat-icon><span>Edit Structure</span>
+        </button>
+        <button class="btn-disable" (click)="disableTicket(ticket)">Disable</button>
+      </div>
+    </div>
+  </div>
+</div>

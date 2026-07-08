@@ -1,0 +1,73 @@
+@use 'styles/variables' as v;
+@use 'styles/mixins' as m;
+
+.modal-overlay {
+  position: fixed; inset: 0; width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  display: flex; align-items: center; justify-content: center; z-index: 200; padding: 24px; box-sizing: border-box;
+}
+
+.modal-card--barcode {
+  @include m.glass-panel;
+  background: rgba(v.$surface-container-high, 0.85); border: 1px solid rgba(v.$white, 0.08); border-radius: 24px;
+  width: 100%; max-width: 420px; padding: 32px; box-shadow: 0 40px 80px rgba(0, 0, 0, 0.8);
+  display: flex; flex-direction: column; gap: 24px; text-align: center; box-sizing: border-box;
+  animation: modalPopOpen 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+
+  &__header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    border-bottom: 1px solid rgba(v.$white, 0.06); padding-bottom: 16px; text-align: left;
+
+    h2 { @include m.headline-lg; font-size: 20px; color: v.$white; font-weight: 700; }
+    p { font-size: 13px; color: v.$on-surface-variant; margin-top: 2px; line-height: 1.4; }
+  }
+}
+
+.btn-close-modal {
+  background: transparent; border: none; color: v.$on-surface-variant; cursor: pointer; padding: 0;
+  &:hover { color: v.$white; }
+  mat-icon { font-size: 22px; width: 22px; height: 22px; }
+}
+
+// BODY & BARCODE GRAPHIC HOLDER
+.modal-card__body {
+  display: flex; flex-direction: column; align-items: center; gap: 20px;
+}
+
+.barcode-container {
+  position: relative; padding: 20px; border-radius: 16px; background: v.$white;
+  box-shadow: 0 0 30px rgba(v.$primary, 0.15); display: flex; align-items: center; justify-content: center;
+  overflow: hidden; width: 200px; height: 200px; box-sizing: border-box;
+
+  .barcode-graphic {
+    color: #080808; // Warna hitam solid agar terbaca scanner
+    // .huge-qr { font-size: 160px; width: 160px; height: 160px; }
+  }
+
+  // Animasi garis laser scan merah/biru tipis melintas
+  .scanner-line {
+    position: absolute; left: 0; top: 0; width: 100%; height: 2px;
+    background: linear-gradient(90deg, transparent, v.$primary, transparent);
+    animation: scanLaser 2s linear infinite;
+    box-shadow: 0 0 8px v.$primary;
+  }
+}
+
+.invoice-display {
+  display: flex; flex-direction: column; gap: 4px;
+  .label { font-size: 11px; text-transform: uppercase; color: v.$on-surface-variant; letter-spacing: 0.05em; }
+  .code { font-size: 18px; color: v.$white; font-weight: 700; font-family: monospace; letter-spacing: 0.02em; }
+}
+
+// FOOTER INFORMASI KEAMANAN
+.modal-card__footer {
+  border-top: 1px solid rgba(v.$white, 0.06); padding-top: 16px;
+  display: flex; gap: 10px; align-items: flex-start; text-align: left;
+
+  mat-icon { font-size: 18px; width: 18px; height: 18px; color: v.$secondary; flex-shrink: 0; margin-top: 2px; }
+  p { font-size: 12px; color: v.$on-surface-variant; line-height: 1.5; opacity: 0.8; }
+}
+
+// KEYFRAMES ANIMASI
+@keyframes modalPopOpen { from { opacity: 0; transform: scale(0.95) translateY(10px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+@keyframes scanLaser { 0% { top: 0%; } 50% { top: 100%; } 100% { top: 0%; } }

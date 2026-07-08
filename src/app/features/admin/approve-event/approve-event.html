@@ -1,0 +1,78 @@
+<div class="page">
+
+    <h1>
+
+        Event Approvals
+
+    </h1>
+
+    @for(event of events; track event.id){
+
+    <mat-card class="card">
+
+        <img
+            [src]="event.banner"
+            alt="banner">
+
+        <div class="content">
+
+            <h2>
+
+                {{ event.title }}
+
+            </h2>
+
+            <p>
+
+                {{ event.category }}
+
+            </p>
+
+            <p>
+
+                {{ event.time | date:'dd MMM yyyy HH:mm' }}
+
+            </p>
+
+            <p>
+
+                {{ event.venue }}
+
+            </p>
+
+            <p>
+
+                Organizer :
+
+                {{ event.organizer.fullName }}
+
+            </p>
+
+            <div class="actions">
+
+                <button
+                    mat-stroked-button
+                    [routerLink]="['/events',event.id]">
+
+                    Detail
+
+                </button>
+
+                <button
+                    mat-flat-button
+                    color="primary"
+                    (click)="approve(event)">
+
+                    Approve
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </mat-card>
+
+    }
+
+</div>

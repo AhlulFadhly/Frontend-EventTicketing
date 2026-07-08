@@ -1,0 +1,34 @@
+<button class="btn-back" (click)="onBack.emit()">
+  <mat-icon>arrow_back</mat-icon><span>Back to Master Events List</span>
+</button>
+
+<div class="event-hub">
+  <div class="event-hub__header">
+    <div class="event-hub__title-area">
+      <h2>{{ event.title }} <span class="sub-id">#ID-00{{ event.id }}</span></h2>
+      <div class="event-actions">
+        <button class="btn-hub-action btn-hub-action--publish" *ngIf="event.status !== 'Published'" (click)="onPublish.emit(event)">
+          <mat-icon>publish</mat-icon><span>Publish Event</span>
+        </button>
+        <button class="btn-hub-action btn-hub-action--cancel" *ngIf="event.status !== 'Cancelled'" (click)="onCancel.emit(event)">
+          <mat-icon>cancel</mat-icon><span>Cancel Event</span>
+        </button>
+      </div>
+    </div>
+    
+    <div class="hub-sub-tabs">
+      <button class="sub-tab-btn" [class.sub-tab-btn--active]="subTab === 'tickets'" (click)="subTab = 'tickets'">Tickets Tier</button>
+      <button class="sub-tab-btn" [class.sub-tab-btn--active]="subTab === 'attendees'" (click)="subTab = 'attendees'">Attendees</button>
+      <button class="sub-tab-btn" [class.sub-tab-btn--active]="subTab === 'staffs'" (click)="subTab = 'staffs'">Crews & Staffs</button>
+    </div>
+  </div>
+
+  <div class="event-hub__content">
+
+    <app-ticket-management *ngIf="subTab === 'tickets'" [eventId]="event.id" (onAddTicket)="onAddTicket.emit($event)" (onEditTicket)="onEditTicket.emit($event)"></app-ticket-management>
+
+
+    <app-attendee-management *ngIf="subTab === 'attendees'" [eventId]="event.id"></app-attendee-management>
+    <app-staff-management *ngIf="subTab === 'staffs'" [eventId]="event.id"></app-staff-management>
+  </div>
+</div>

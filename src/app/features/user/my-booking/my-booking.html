@@ -1,0 +1,76 @@
+<div class="bookings-wrapper">
+  <div class="ambient-blur"></div>
+
+  <main class="bookings-page max-container">
+    
+    <header class="bookings-header">
+      <div class="bookings-header__text-group">
+        <h1 class="bookings-header__title">My Ticket <span class="text-gradient">Ledgers</span></h1>
+        <p class="bookings-header__subtitle">Track your secure active bookings, view access invoices, or manage reservations.</p>
+      </div>
+    </header>
+
+    <section class="bookings-list">
+      
+      <div class="booking-card" *ngFor="let booking of myBookings">
+        <div class="booking-card__glow"></div>
+        
+        <div class="booking-card__main-info">
+          <div class="event-date-badge">
+            <span class="month">{{ booking.time | date:'MMM' | uppercase }}</span>
+            <span class="day">{{ booking.time | date:'dd' }}</span>
+          </div>
+          
+          <div class="event-details">
+            <div class="tier-tag-row">
+              <!-- <span class="badge-tier" [class.badge-tier--vip]="booking.ticketTier.toLowerCase() === 'vip'">
+                {{ booking. }} Tier
+              </span> -->
+              <span class="booking-id">ID: {{ booking.ticketCode }}</span>
+            </div>
+            <h3 class="event-title">{{ booking.eventTitle }}</h3>
+            <p class="event-meta">
+              <mat-icon>schedule</mat-icon><span>{{ booking.time | date:'HH:mm' }} WIB</span>
+              <span class="separator">•</span>
+              <mat-icon>location_on</mat-icon><span>{{ booking.venue }}</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="booking-card__side-info">
+          <div class="price-summary">
+            <p class="qty-label">Quantity: <strong>{{ booking.quantity }} Pcs</strong></p>
+            <h4 class="total-price">{{ booking.total| currency:'IDR':'symbol-narrow':'1.0-0' }}</h4>
+          </div>
+
+          <div class="status-action-row">
+            <span class="status-indicator-tag" 
+                  [class.status-indicator-tag--success]="booking.status === 'PAID'"
+                  [class.status-indicator-tag--pending]="booking.status === 'PENDING'">
+              {{ booking.status }}
+            </span>
+            
+            <button class="btn-pay-now" *ngIf="booking.status === 'PENDING'" (click)="navigateToPayment(booking)">
+              <mat-icon>payments</mat-icon>
+              <span>Pay Now</span>
+            </button>
+
+            <button class="btn-view-barcode" *ngIf="booking.status === 'PAID'" (click)="openBarcode(booking.ticketCode, booking.eventTitle)">
+              <mat-icon>qr_code</mat-icon>
+              <span>View Barcode</span>
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+  </main>
+</div>
+
+<app-barcode 
+  *ngIf="showBarcodeModal" 
+  [invoiceId]="selectedInvoiceId" 
+  [eventTitle]="selectedEventTitle" 
+  (onClose)="showBarcodeModal = false">
+</app-barcode>

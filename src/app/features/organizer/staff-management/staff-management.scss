@@ -1,0 +1,107 @@
+@use 'styles/variables' as v;
+@use 'styles/mixins' as m;
+
+.sub-view {
+    animation: fadeIn 0.3s ease-in-out;
+
+    h3 {
+        color: v.$white;
+    }
+}
+
+.staff-assignment {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+
+    @media (min-width: 768px) {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.inline-form {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.glass-input-field {
+    @include m.glass-input;
+    flex: 1;
+    height: 44px;
+    border-radius: 12px;
+    padding: 0 16px;
+    color: v.$white;
+    box-sizing: border-box;
+    @include m.body-md;
+    font-size: 14px;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(v.$white, 0.08);
+
+    &:focus {
+        border-color: v.$primary;
+        outline: none;
+    }
+}
+
+.btn-assign {
+    background: v.$white;
+    color: v.$surface-container-lowest;
+    border: none;
+    padding: 0 20px;
+    border-radius: 12px;
+    @include m.label-md;
+    font-weight: 600;
+    cursor: pointer;
+
+    &:hover {
+        filter: brightness(0.9);
+    }
+}
+
+.crew-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+
+    li {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 14px;
+        border-radius: 12px;
+        background: rgba(v.$white, 0.01);
+        border: 1px solid rgba(v.$white, 0.03);
+
+        mat-icon {
+            color: v.$primary;
+            font-size: 24px;
+            width: 24px;
+            height: 24px;
+        }
+
+        p {
+            font-size: 14px;
+            font-weight: 600;
+            color: v.$white;
+        }
+
+        span {
+            font-size: 12px;
+            color: v.$on-surface-variant;
+        }
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

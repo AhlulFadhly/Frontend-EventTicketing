@@ -1,0 +1,70 @@
+@import 'styles/variables';
+@import 'styles/mixins';
+
+.footer {
+  width: 100%;
+  border-radius: $radius-default $radius-default 0 0;
+  background: rgba($surface-container-lowest, 0.8);
+  backdrop-filter: blur(25px);
+  border-top: 1px solid rgba($white, 0.12);
+  position: relative;
+  z-index: 10;
+
+  &__container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: $gutter;
+    padding: $stack-lg $padding-desktop;
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      padding: $stack-lg $padding-mobile;
+    }
+  }
+
+  &__brand {
+    grid-column: span 4;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    @media (min-width: 768px) {
+      grid-column: span 1;
+    }
+  }
+
+  &__title {
+    font-size: 20px;
+    font-weight: bold;
+    color: $on-surface;
+  }
+
+  &__copyright {
+    @include body-md;
+    font-size: 14px;
+    color: $secondary;
+  }
+
+  &__links {
+    grid-column: span 4;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 32px;
+    justify-content: flex-start;
+
+    @media (min-width: 768px) {
+      grid-column: span 3;
+      justify-content: flex-end;
+    }
+  }
+
+  &__link {
+    @include label-sm;
+    color: $on-surface-variant;
+    transition: color 0.25s ease;
+
+    &:hover {
+      color: $primary;
+    }
+  }
+}

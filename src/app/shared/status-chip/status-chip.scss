@@ -1,0 +1,51 @@
+@use 'styles/variables' as v;
+@use 'styles/mixins' as m;
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  border-radius: v.$radius-full;
+  font-family: v.$font-family;
+  font-size: 11px;             // Sedikit diperkecil agar lebih rapi di dalam tabel
+  font-weight: 600;
+  text-transform: uppercase;   // Membuat teks status menjadi kapital kapital elegan
+  letter-spacing: 0.05em;
+  border: 1px solid transparent;
+  backdrop-filter: blur(4px);
+  width: fit-content;
+  white-space: nowrap;
+
+
+  
+}
+
+/* PREMIUM GLOW STATUS COLORS */
+.Published {
+  background: rgba(v.$secondary, 0.1); 
+  color: v.$secondary;
+  border-color: rgba(v.$secondary, 0.2);
+  box-shadow: 0 0 12px rgba(v.$secondary, 0.05);
+}
+
+.Coming, .Soon {
+  background: rgba(v.$on-surface-variant, 0.1);
+  color: v.$on-surface-variant;
+  border-color: rgba(v.$on-surface-variant, 0.2);
+  opacity: 0.8;
+}
+
+.WAITING_APPROVAL {
+  background: rgba(v.$tertiary, 0.1);
+  color: v.$tertiary;
+  border-color: rgba(v.$tertiary, 0.2);
+  box-shadow: 0 0 12px rgba(v.$tertiary, 0.05);
+}
+
+.REJECTED, .Cancelled {
+  background: rgba(#ffb4ab, 0.1); // Menggunakan warna error palette dasar
+  color: #ffb4ab;
+  border-color: rgba(#ffb4ab, 0.2);
+  box-shadow: 0 0 12px rgba(#ffb4ab, 0.05);
+}

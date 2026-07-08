@@ -1,0 +1,116 @@
+@if(profile){
+
+<mat-card class="profile-card">
+
+    <div class="avatar">
+
+        @if(profile.profileImage){
+
+        <img
+            [src]="profile.profileImage">
+
+        }@else{
+
+        <mat-icon>
+
+            account_circle
+
+        </mat-icon>
+
+        }
+
+    </div>
+
+    <h2>
+
+        {{ profile.fullName }}
+
+    </h2>
+
+    <p>
+
+        {{ profile.email }}
+
+    </p>
+
+    <div class="role">
+
+        {{ profile.roles }}
+
+    </div>
+
+    <div class="info">
+
+        <div>
+
+            <span>Full Name</span>
+
+            <strong>
+
+                {{ profile.fullName }}
+
+            </strong>
+
+        </div>
+
+        <div>
+
+            <span>Email</span>
+
+            <strong>
+
+                {{ profile.email }}
+
+            </strong>
+
+        </div>
+
+        <div>
+
+            <span>Phone</span>
+
+            <strong>
+
+                {{ profile.phone }}
+
+            </strong>
+
+        </div>
+
+        <div>
+
+            <span>Active</span>
+
+            <strong>
+
+                {{ profile.active ? 'Yes' : 'No' }}
+
+            </strong>
+
+        </div>
+
+        <div>
+
+            <span>Verified</span>
+
+            <strong>
+
+                {{ profile.verified ? 'Verified' : 'Not Verified' }}
+
+            </strong>
+
+        </div>
+
+    </div>
+
+    <button
+        mat-flat-button
+        color="primary">
+
+        Edit Profile
+
+    </button>
+
+</mat-card>
+
+}

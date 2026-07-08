@@ -1,0 +1,378 @@
+@use 'styles/variables' as v;
+@use 'styles/mixins' as m;
+
+// ==========================================================================
+// CORE LAYOUT WRAPPERS
+// ==========================================================================
+.bookings-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #080808;
+  position: relative;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.bookings-page {
+  position: relative;
+  z-index: 10;
+  padding-top: 140px;
+  padding-bottom: v.$stack-lg * 2;
+}
+
+// MULTI-LAYER AMBIENT NEON GLOW EFFECTS
+.ambient-blur {
+  position: absolute;
+  top: -10%;
+  right: 10%;
+  width: 60vw;
+  height: 50vh;
+  background: radial-gradient(circle, rgba(v.$accent-blue, 0.1) 0%, transparent 70%);
+  filter: blur(140px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+// ==========================================================================
+// TYPOGRAPHY & CONSOLE HEADER
+// ==========================================================================
+.bookings-header {
+  padding: 0 v.$padding-desktop;
+  margin-bottom: v.$stack-lg;
+
+  @media (max-width: 992px) { padding: 0 v.$padding-mobile; }
+
+  &__title {
+    @include m.headline-xl;
+    font-size: 36px;
+    font-weight: 700;
+    color: v.$white;
+    letter-spacing: -0.02em;
+
+    .text-gradient {
+      background: linear-gradient(135deg, v.$white 30%, v.$primary 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
+  &__subtitle {
+    @include m.body-md;
+    color: v.$on-surface-variant;
+    margin-top: 6px;
+    max-width: 550px;
+    opacity: 0.8;
+  }
+}
+
+// ==========================================================================
+// BOOKING CARDS LIST CONTAINER
+// ==========================================================================
+.bookings-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 0 v.$padding-desktop;
+  @media (max-width: 992px) { padding: 0 v.$padding-mobile; }
+}
+
+// INDIVIDUAL VERTICAL GLASS BOOKING CARD ELEMENT
+.booking-card {
+  @include m.glass-panel;
+  background: rgba(v.$surface-container, 0.2);
+  border: 1px solid rgba(v.$white, 0.06);
+  border-radius: 20px;
+  padding: 24px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, border-color 0.3s, box-shadow 0.3s;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    align-items: center;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+    border-color: rgba(v.$white, 0.12);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+  }
+
+  &__glow {
+    position: absolute;
+    top: -40px;
+    left: -40px;
+    width: 100px;
+    height: 100px;
+    background: radial-gradient(circle, rgba(v.$primary, 0.05) 0%, transparent 70%);
+    filter: blur(10px);
+    pointer-events: none;
+  }
+}
+
+// ==========================================================================
+// LEFT BLOCK: EVENT METADATA DETAILS
+// ==========================================================================
+.booking-card__main-info {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex: 1;
+}
+
+// MINI CALENDAR INVOICE METRIC
+.event-date-badge {
+  width: 64px;
+  height: 68px;
+  border-radius: 14px;
+  background: rgba(v.$white, 0.03);
+  border: 1px solid rgba(v.$white, 0.06);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  .month {
+    font-size: 11px;
+    font-weight: 700;
+    color: v.$primary;
+    letter-spacing: 0.05em;
+  }
+
+  .day {
+    font-size: 22px;
+    font-weight: 700;
+    color: v.$white;
+    line-height: 1.1;
+    margin-top: 2px;
+  }
+}
+
+.event-details {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  .event-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: v.$white;
+    letter-spacing: -0.01em;
+  }
+}
+
+.tier-tag-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  .booking-id {
+    font-size: 12px;
+    color: v.$on-surface-variant;
+    opacity: 0.5;
+    font-family: monospace;
+  }
+}
+
+.badge-tier {
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 10px;
+  font-weight: 700;
+  background: rgba(v.$white, 0.05);
+  color: v.$on-surface-variant;
+  text-transform: uppercase;
+  border: 1px solid rgba(v.$white, 0.08);
+
+  &--vip {
+    background: rgba(v.$primary, 0.1);
+    color: v.$primary;
+    border-color: rgba(v.$primary, 0.15);
+  }
+}
+
+.event-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  color: v.$on-surface-variant;
+  flex-wrap: wrap;
+
+  mat-icon {
+    font-size: 14px;
+    width: 14px;
+    height: 14px;
+    color: rgba(v.$white, 0.3);
+  }
+
+  .separator {
+    color: rgba(v.$white, 0.15);
+    margin: 0 4px;
+  }
+}
+
+// ==========================================================================
+// RIGHT BLOCK: INVOICE SUMS & ACTION BUTTONS
+// ==========================================================================
+.booking-card__side-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  border-top: 1px solid rgba(v.$white, 0.04);
+  padding-top: 18px;
+  gap: 24px;
+
+  @media (min-width: 768px) {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    border-top: none;
+    padding-top: 0;
+    text-align: right;
+  }
+}
+
+.price-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  .qty-label {
+    font-size: 12px;
+    color: v.$on-surface-variant;
+    strong { color: v.$white; }
+  }
+
+  .total-price {
+    font-size: 18px;
+    font-weight: 700;
+    color: v.$white;
+  }
+}
+
+.status-action-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  @media (min-width: 768px) {
+    justify-content: flex-end;
+  }
+}
+
+// ==========================================================================
+// BUTTON STYLING HOOKS
+// ==========================================================================
+
+// 1. PREMIUM BUTTON: PAY NOW (NEON INDIGO GRADIENT)
+.btn-pay-now {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 14px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(135deg, v.$primary 0%, v.$accent-blue 100%);
+  color: v.$white;
+  @include m.label-sm;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(v.$primary, 0.25);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+  mat-icon { font-size: 15px; width: 15px; height: 15px; color: v.$white; }
+
+  &:hover {
+    filter: brightness(1.15);
+    transform: translateY(-1px);
+    box-shadow: 0 6px 16px rgba(v.$primary, 0.4);
+  }
+  &:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(v.$primary, 0.2);
+  }
+}
+
+// 2. GLASS BUTTON: VIEW ACCESS BARCODE
+.btn-view-barcode {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 8px;
+  background: rgba(v.$white, 0.04);
+  border: 1px solid rgba(v.$white, 0.08);
+  color: v.$white;
+  @include m.label-sm;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  mat-icon { font-size: 15px; width: 15px; height: 15px; color: v.$primary; }
+
+  &:hover {
+    background: rgba(v.$white, 0.08);
+    border-color: rgba(v.$white, 0.15);
+    transform: translateY(-1px);
+  }
+}
+
+// 3. MUTED BUTTON: CANCEL BOOKING RESERVATION
+.btn-cancel-booking {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 8px;
+  background: rgba(#ffb4ab, 0.05);
+  border: 1px solid rgba(#ffb4ab, 0.12);
+  color: #ffb4ab;
+  @include m.label-sm;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  mat-icon { font-size: 14px; width: 14px; height: 14px; }
+
+  &:hover {
+    background: rgba(#ffb4ab, 0.15);
+    border-color: rgba(#ffb4ab, 0.25);
+    color: v.$white;
+  }
+}
+
+// ==========================================================================
+// TRANSACTION STATUS INVOICE CHIPS
+// ==========================================================================
+.status-indicator-tag {
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  background: rgba(v.$white, 0.04);
+  color: v.$on-surface-variant;
+  border: 1px solid rgba(v.$white, 0.08);
+
+  &--success {
+    background: rgba(v.$secondary, 0.1);
+    color: v.$secondary;
+    border-color: rgba(v.$secondary, 0.15);
+  }
+
+  &--pending {
+    background: rgba(#f59e0b, 0.08);
+    color: #f59e0b;
+    border-color: rgba(#f59e0b, 0.15);
+  }
+}

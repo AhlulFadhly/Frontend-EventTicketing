@@ -1,0 +1,60 @@
+@use 'styles/variables' as v;
+@use 'styles/mixins' as m;
+
+.btn-back {
+  display: inline-flex; align-items: center; gap: 8px; background: transparent; border: none;
+  color: v.$primary; @include m.label-md; cursor: pointer; margin-bottom: 24px; transition: color 0.2s;
+  &:hover { color: v.$white; }
+  mat-icon { font-size: 18px; width: 18px; height: 18px; }
+}
+
+.event-hub {
+  @include m.glass-panel;
+  background: rgba(v.$surface-container, 0.3);
+  border: 1px solid rgba(v.$white, 0.06);
+  border-radius: 24px;
+  padding: 32px;
+
+  &__header {
+    display: flex; flex-direction: column; gap: 20px; border-bottom: 1px solid rgba(v.$white, 0.06);
+    padding-bottom: 24px; margin-bottom: 24px;
+    @media (min-width: 992px) { flex-direction: row; justify-content: space-between; align-items: center; }
+  }
+
+  &__title-area {
+    display: flex; align-items: center; gap: 24px; flex-wrap: wrap;
+    h2 {
+      @include m.headline-xl; font-size: 26px; color: v.$white;
+      .sub-id { font-size: 13px; color: v.$on-surface-variant; font-weight: 400; margin-left: 6px; }
+    }
+  }
+}
+
+.event-actions { display: flex; gap: 10px; }
+
+.btn-hub-action {
+  display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px; border-radius: 10px;
+  @include m.label-sm; font-weight: 600; border: none; cursor: pointer; transition: all 0.2s;
+  mat-icon { font-size: 16px; width: 16px; height: 16px; }
+
+  &--publish {
+    background: rgba(v.$secondary, 0.1); color: v.$secondary; border: 1px solid rgba(v.$secondary, 0.2);
+    &:hover { background: rgba(v.$secondary, 0.2); }
+  }
+  &--cancel {
+    background: rgba(#ffb4ab, 0.08); color: #ffb4ab; border: 1px solid rgba(#ffb4ab, 0.15);
+    &:hover { background: rgba(#ffb4ab, 0.15); }
+  }
+}
+
+.hub-sub-tabs {
+  display: flex; gap: 6px; background: rgba(0, 0, 0, 0.25); padding: 4px; border-radius: 12px;
+  border: 1px solid rgba(v.$white, 0.04);
+}
+
+.sub-tab-btn {
+  background: transparent; border: none; padding: 8px 18px; border-radius: 8px;
+  @include m.label-sm; color: v.$on-surface-variant; cursor: pointer; transition: all 0.2s;
+  &:hover { color: v.$white; }
+  &--active { background: rgba(v.$white, 0.08); color: v.$white !important; }
+}

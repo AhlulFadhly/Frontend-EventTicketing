@@ -1,0 +1,17 @@
+<div class="sub-view">
+  <h3>Registered Attendees</h3>
+  <div class="table-responsive">
+    <table class="premium-table">
+      <thead>
+        <tr><th>Attendee Name</th><th>Email Context</th><th>Ticket Code</th></tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let attendee of attendees">
+          <td class="text-white">{{ attendee.name }}</td>
+          <td>{{ attendee.email }}</td>
+          <td><span class="text-primary">{{ attendee.bookingId }}</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

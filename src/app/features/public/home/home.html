@@ -1,0 +1,107 @@
+<main class="main-canvas max-container">
+  <div class="ambient-glow"></div>
+
+  <section class="hero">
+    <div class="hero__content">
+      <h1 class="hero__title">
+        Discover Amazing<br>Events Near You
+      </h1>
+      <p class="hero__description">
+        Book concerts, conferences, workshops and festivals in seconds. Experience precision engineering for
+        unforgettable moments.
+      </p>
+      <div class="hero__actions">
+        <a href="/events">
+          <button class="hero__btn hero__btn--primary">Explore Events</button>
+        </a>
+        <button class="hero__btn hero__btn--secondary">Become Organizer</button>
+      </div>
+    </div>
+
+    <div class="hero__mockup-wrapper">
+      <div class="ticket">
+        <div class="ticket__header">
+          <div>
+            <span class="ticket__tag">VIP PASS</span>
+            <h3 class="ticket__title">Neon Genesis<br>Festival</h3>
+          </div>
+          <div class="ticket__qr-box">
+            <mat-icon>qr_code</mat-icon>
+          </div>
+        </div>
+
+        <div class="ticket__body">
+          <div class="ticket__grid">
+            <div>
+              <span class="ticket__label">DATE</span>
+              <span class="ticket__value">Oct 24, 2024</span>
+            </div>
+            <div>
+              <span class="ticket__label">TIME</span>
+              <span class="ticket__value">21:00 EST</span>
+            </div>
+          </div>
+          <div>
+            <span class="ticket__label">VENUE</span>
+            <span class="ticket__value">The Obsidian Arena, NY</span>
+          </div>
+        </div>
+
+        <div class="ticket__footer">
+          <div class="ticket__barcode">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </div>
+        <div class="ticket__glow"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="featured">
+    <div class="featured__header">
+      <div class="featured__title-area">
+        <h2 class="featured__title">Featured Events</h2>
+        <p class="featured__subtitle">Trending events curated for you.</p>
+      </div>
+      <a href="/events" class="featured__more-link">
+        View More
+      </a>
+    </div>
+
+    <div class="featured__grid">
+      @for (event of page?.content?.slice(0, 4); track event.id){
+      <div class="card">
+        <div class="card__image-wrapper">
+          <div class="card__image ">
+            <img [src]="event.banner || 'https://placehold.co/1200x600'" alt="event banner" />
+          </div>
+          <div class="card__status card__status--alert"><span>{{ event.status }}</span></div>
+          <div class="card__badge"><span>{{ event.category }}</span></div>
+        </div>
+        <div class="card__content">
+          <h4 class="card__title">{{ event.title }}</h4>
+          <div class="card__details">
+            <div class="card__info">
+              <mat-icon>calendar_today</mat-icon>
+              <span>{{ event.time | date:'MMM dd, yyyy' }}</span>
+            </div>
+            <div class="card__info">
+              <mat-icon> location_on</mat-icon>
+              <span>{{ event.venue }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+
+    </div>
+  </section>
+</main>

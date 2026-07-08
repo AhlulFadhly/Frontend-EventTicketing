@@ -1,0 +1,457 @@
+@import 'styles/variables';
+@import 'styles/mixins';
+
+.main-canvas {
+  position: relative;
+  padding-top: 120px;
+  padding-bottom: $stack-lg;
+}
+
+.ambient-glow {
+  position: absolute;
+  top: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80vw;
+  height: 80vh;
+  border-radius: $radius-full;
+  background: rgba($accent-blue, 0.1);
+  filter: blur(120px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+// HERO SECTION SCSS
+.hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: $gutter;
+  padding: 0 $padding-desktop;
+  min-height: 70vh;
+  align-items: center;
+  position: relative;
+
+  @media (min-width: 768px) {
+    grid-template-columns: repeat(12, 1fr);
+  }
+
+  @media (max-width: 768px) {
+    padding: 0 $padding-mobile;
+  }
+
+  &__content {
+    grid-column: span 1;
+    display: flex;
+    flex-direction: column;
+    gap: $stack-md;
+    z-index: 10;
+
+    @media (min-width: 768px) {
+      grid-column: span 6;
+    }
+  }
+
+  &__title {
+    @include display-lg;
+    @include gradient-text;
+  }
+
+  &__description {
+    @include body-lg;
+    color: $on-surface-variant;
+    max-width: 512px;
+  }
+
+  &__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    margin-top: $stack-sm;
+  }
+
+  &__btn {
+    padding: 16px 32px;
+    border-radius: $radius-full;
+    @include label-md;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &--primary {
+      background-color: $accent-blue;
+      color: $white;
+      box-shadow: 0 8px 16px rgba($accent-blue, 0.2);
+
+      &:hover {
+        filter: brightness(1.05);
+        transform: scale(1.02);
+      }
+    }
+
+    &--secondary {
+      @include glass-btn;
+      color: $on-surface;
+
+      &:hover {
+        background: rgba($white, 0.1);
+      }
+    }
+  }
+
+  &__mockup-wrapper {
+    grid-column: span 1;
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    perspective: 1000px;
+    margin-top: 48px;
+
+    @media (min-width: 768px) {
+      grid-column: span 6;
+      margin-top: 0;
+    }
+  }
+}
+
+// 3D GLASS TICKET
+.ticket {
+  @include glass-panel;
+  width: 100%;
+  max-width: 400px;
+  aspect-ratio: 4 / 5;
+  border-radius: 40px;
+  display: flex;
+  flex-direction: column;
+  padding: 32px;
+  transform: rotateY(-10deg) rotateX(5deg);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &:hover {
+    transform: rotateY(0deg) rotateX(0deg);
+    
+    .ticket__glow {
+      background: rgba($accent-blue, 0.5);
+    }
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    border-bottom: 1px solid rgba($white, 0.1);
+    padding-bottom: 24px;
+    margin-bottom: 24px;
+  }
+
+  &__tag {
+    color: $accent-blue;
+    @include label-sm;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  &__title {
+    @include headline-lg;
+    color: $on-surface;
+  }
+
+  &__qr-box {
+    width: 48px;
+    height: 48px;
+    border-radius: $radius-full;
+    @include glass-panel;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    span { color: $on-surface; }
+  }
+
+  &__body {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+
+  &__label {
+    display: block;
+    color: $on-surface-variant;
+    @include label-sm;
+    margin-bottom: 4px;
+  }
+
+  &__value {
+    display: block;
+    color: $on-surface;
+    @include body-md;
+    font-weight: 500;
+  }
+
+  &__footer {
+    margin-top: auto;
+    padding-top: 24px;
+    border-top: 1px solid rgba($white, 0.1);
+    opacity: 0.5;
+  }
+
+  &__barcode {
+    height: 32px;
+    width: 100%;
+    background: linear-gradient(to right, transparent, rgba($white, 0.2), transparent);
+    display: flex;
+    justify-content: space-between;
+    padding: 0 16px;
+
+    div {
+      height: 100%;
+      background-color: $white;
+      
+      // Memberikan ketebalan barcode tiruan secara acak
+      &:nth-child(odd) { width: 1px; }
+      &:nth-child(2) { width: 2px; }
+      &:nth-child(4) { width: 3px; }
+      &:nth-child(7) { width: 4px; }
+    }
+  }
+
+  &__glow {
+    position: absolute;
+    top: -80px;
+    right: -80px;
+    width: 160px;
+    height: 160px;
+    background: rgba($accent-blue, 0.3);
+    border-radius: $radius-full;
+    filter: blur(50px);
+    transition: background 0.7s ease;
+    pointer-events: none;
+  }
+}
+
+// FEATURED EVENTS SECTION
+.featured {
+  padding: $stack-lg $padding-desktop;
+
+  @media (max-width: 768px) {
+    padding: $stack-lg $padding-mobile;
+  }
+
+  &__header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: $stack-md;
+  }
+
+  &__title-area {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &__title {
+    @include headline-xl;
+    color: $on-surface;
+  }
+
+  &__subtitle {
+    @include body-md;
+    color: $on-surface-variant;
+  }
+
+  &__more-link {
+    @include label-md;
+    color: $on-surface-variant;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding-bottom: 4px;
+    transition: color 0.2s ease;
+
+    &:hover { color: $primary; }
+    span { font-size: 18px; }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: $gutter;
+
+    @media (min-width: 768px) { grid-template-columns: repeat(2, 1fr); }
+    @media (min-width: 1024px) { grid-template-columns: repeat(4, 1fr); }
+  }
+}
+
+// COMPONENT CARD EVENT
+.card {
+  @include glass-panel;
+  border-radius: $radius-default;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba($accent-blue, 0.15);
+
+    .card__image {
+      transform: scale(1.1);
+    }
+  }
+
+  &__image-wrapper {
+    position: relative;
+    height: 192px;
+    width: 100%;
+    overflow: hidden;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.7s ease-in-out;
+  }
+
+  &.card__image-wrapper::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, $surface, transparent);
+  }
+
+  &__badge {
+    position: absolute;
+    top: 16px;
+    left: 16px;
+    @include glass-panel;
+    padding: 4px 12px;
+    border-radius: $radius-full;
+    backdrop-blur: 12px;
+
+    span {
+      @include label-sm;
+      color: $white;
+    }
+  }
+
+  &__status {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    padding: 6px 14px;
+    border-radius: $radius-full;
+    z-index: 2;
+    @include label-sm;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+
+    &--alert {
+      background: rgba($tertiary-container, 0.2);
+      color: $tertiary;
+      border: 1px solid rgba($tertiary, 0.4);
+    }
+
+    &--sold {
+      background: rgba($surface-variant, 0.4);
+      color: $on-surface-variant;
+      border: 1px solid rgba($white, 0.1);
+    }
+  }
+
+  &__content {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 16px;
+    position: relative;
+    background: rgba($surface-container-low, 0.5);
+    z-index: 10;
+  }
+
+  &__title {
+    @include headline-lg;
+    font-size: 24px;
+    color: $on-surface;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  &__details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-top: auto;
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: $on-surface-variant;
+    @include label-sm;
+
+    mat-icon {
+      font-size: 16px;
+      width: 16px;
+      height: 16px;
+      color: $primary;
+    }
+
+    span {
+      font-family: $font-family;
+      font-size: 13px;
+      line-height: 1;
+      font-weight: 400;
+      letter-spacing: 0.01em;
+    }
+  }
+
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 8px;
+    padding-top: 16px;
+    border-top: 1px solid rgba($white, 0.1);
+  }
+
+  &__price {
+    @include headline-lg;
+    font-size: 20px;
+    color: $white;
+  }
+
+  &__action-btn {
+    color: $accent-blue;
+    @include label-md;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: color 0.2s ease;
+
+    &:hover { color: $white; }
+    span { font-size: 18px; }
+  }
+}

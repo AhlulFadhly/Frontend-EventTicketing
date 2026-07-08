@@ -1,0 +1,153 @@
+@use 'styles/variables' as v;
+@use 'styles/mixins' as m;
+
+.sub-view {
+    animation: fadeIn 0.3s ease-in-out;
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        h3 {
+            color: v.$white;
+        }
+    }
+}
+
+.ticket-management-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin-top: 16px;
+
+    @media (min-width: 640px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: 1024px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.mini-ticket-card {
+    background: rgba(v.$white, 0.02);
+    border: 1px solid rgba(v.$white, 0.06);
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    position: relative;
+    overflow: hidden;
+
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        h4 {
+            font-size: 16px;
+            color: v.$white;
+        }
+
+        .price {
+            color: v.$white;
+            font-weight: 700;
+        }
+    }
+
+    .quota-text {
+        font-size: 13px;
+        color: v.$on-surface-variant;
+    }
+
+    &__actions {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: auto;
+
+        .btn-edit-ticket {
+            background: rgba(v.$white, 0.04);
+            border: 1px solid rgba(v.$white, 0.08);
+            color: v.$on-surface-variant;
+            border-radius: 10px;
+            height: 36px;
+            padding: 0 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+
+            mat-icon {
+                font-size: 14px;
+                width: 14px;
+                height: 14px;
+            }
+
+            &:hover {
+                color: v.$white;
+                background: rgba(v.$white, 0.08);
+            }
+        }
+    }
+
+    &--vip {
+        border-color: rgba(v.$primary, 0.2);
+        background: linear-gradient(135deg, rgba(v.$primary, 0.02) 0%, transparent 100%);
+
+        .mini-ticket-card__header h4,
+        .price {
+            color: v.$primary !important;
+        }
+    }
+}
+
+.btn-disable {
+    background: rgba(#ffb4ab, 0.08);
+    color: #ffb4ab;
+    border: 1px solid rgba(#ffb4ab, 0.15);
+    padding: 8px 0;
+    border-radius: 10px;
+    cursor: pointer;
+    flex: 1;
+    @include m.label-sm;
+    font-weight: 600;
+
+    &:hover {
+        background: rgba(#ffb4ab, 0.15);
+    }
+}
+
+.btn-create {
+    background: v.$accent-blue;
+    color: v.$white;
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    @include m.label-md;
+    font-weight: 600;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+
+    mat-icon {
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}

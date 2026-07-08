@@ -1,0 +1,128 @@
+<div class="checkout-wrapper">
+  <div class="ambient-blur"></div>
+
+  <main class="checkout-page max-container">
+    <button class="btn-back" (click)="goBack()">
+      <mat-icon>arrow_back</mat-icon>
+      <span>Back to Event Details</span>
+    </button>
+
+    <div class="checkout-grid">
+      
+      <section class="checkout-main">
+        
+        <div class="step-panel" *ngIf="currentStep === 1">
+          <div class="glass-box">
+            <h2 class="box-title">Review Ticket Allocation</h2>
+            <p class="box-subtitle">Please specify the ticket quantity you wish to secure for this experience.</p>
+            
+            <div class="ticket-review">
+              <div class="ticket-review__info">
+                <span class="badge-tier" [class.badge-tier--vip]="ticketData.name?.toLowerCase() === 'vip'">
+                  {{ ticketData.name }} Tier
+                </span>
+                <h3>{{ eventTitle }}</h3>
+                <p class="price-per-ticket">
+                  {{ ticketData.price | currency:'IDR':'symbol-narrow':'1.0-0' }} <small>/ ticket</small>
+                </p>
+              </div>
+              
+              <div class="quantity-counter">
+                <button class="btn-counter" (click)="decreaseQty()" [disabled]="quantity <= 1">
+                  <mat-icon>remove</mat-icon>
+                </button>
+                <span class="qty-value">{{ quantity }}</span>
+                <button class="btn-counter" (click)="increaseQty()">
+                  <mat-icon>add</mat-icon>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="step-panel" *ngIf="currentStep === 2">
+          <div class="glass-box">
+            <div class="step-header">
+              <span class="booking-badge">Booking ID: #{{ generatedBookingId }}</span>
+              <h2 class="box-title">Select Payment Gateway</h2>
+            </div>
+            <p class="box-subtitle">Secure encrypted transaction gateway powered by AURA Secure Systems.</p>
+            
+            <div class="payment-methods">
+              <label class="payment-card" [class.payment-card--selected]="selectedMethod === 'QRIS'">
+                <input type="radio" name="payMethod" value="QRIS" [(ngModel)]="selectedMethod" class="hide-radio">
+                <div class="payment-card__content">
+                  <div class="pay-icon-wrapper">
+                    <mat-icon class="pay-icon">qr_code_2</mat-icon>
+                  </div>
+                  <div>
+                    <h4>QRIS Digital Instant</h4>
+                    <p>Scan instantly using GoPay, OVO, Dana, LinkAja, or M-Banking</p>
+                  </div>
+                </div>
+                <div class="select-indicator"></div>
+              </label>
+
+              <label class="payment-card" [class.payment-card--selected]="selectedMethod === 'BANK_TRANSFER'">
+                <input type="radio" name="payMethod" value="BANK_TRANSFER" [(ngModel)]="selectedMethod" class="hide-radio">
+                <div class="payment-card__content">
+                  <div class="pay-icon-wrapper">
+                    <mat-icon class="pay-icon">account_balance</mat-icon>
+                  </div>
+                  <div>
+                    <h4>Bank Virtual Account</h4>
+                    <p>Automated verification for BCA, Mandiri, BNI, or BRI transfers</p>
+                  </div>
+                </div>
+                <div class="select-indicator"></div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <aside class="checkout-sidebar">
+        <div class="invoice-card">
+          <div class="invoice-card__glow"></div>
+          <h3 class="invoice-title">Order Summary</h3>
+          
+          <div class="invoice-details">
+            <div class="invoice-row">
+              <span class="invoice-label">{{ ticketData.name }} Ticket (x{{ quantity }})</span>
+              <span class="invoice-value">
+                {{ (ticketData.price * quantity) | currency:'IDR':'symbol-narrow':'1.0-0' }}
+              </span>
+            </div>
+            <div class="invoice-row">
+              <span class="invoice-label">Platform Service Fee</span>
+              <span class="invoice-value text-success">FREE</span>
+            </div>
+            
+            <div class="invoice-divider"></div>
+            
+            <div class="invoice-row invoice-row--total">
+              <span>Total Payment</span>
+              <span class="total-price">
+                {{ (ticketData.price * quantity) | currency:'IDR':'symbol-narrow':'1.0-0' }}
+              </span>
+            </div>
+          </div>
+
+          <button class="btn-checkout-action" *ngIf="currentStep === 1" (click)="proceedToBooking()" [disabled]="isLoading">
+            <span *ngIf="!isLoading">Confirm & Create Booking</span>
+            <span *ngIf="isLoading">Processing...</span>
+            <mat-icon *ngIf="!isLoading">arrow_forward</mat-icon>
+          </button>
+
+          <button class="btn-checkout-action btn-checkout-action--pay" *ngIf="currentStep === 2" (click)="executePayment()" [disabled]="isLoading">
+            <mat-icon *ngIf="!isLoading">shield</mat-icon>
+            <span *ngIf="!isLoading">Pay Securely Now</span>
+            <span *ngIf="isLoading">Verifying Payment...</span>
+          </button>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+</div>

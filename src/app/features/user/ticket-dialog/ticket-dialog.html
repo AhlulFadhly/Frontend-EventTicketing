@@ -1,0 +1,41 @@
+<h2 mat-dialog-title>
+
+Your Ticket
+
+</h2>
+
+<div
+    mat-dialog-content
+    class="content">
+
+    @if(qr){
+
+    <qrcode
+        [qrdata]="qr"
+        [width]="220">
+
+    </qrcode>
+
+    <h3>
+
+        {{ ticketCode }}
+
+    </h3>
+
+    }
+
+</div>
+
+<div
+    mat-dialog-actions
+    align="center">
+
+    <button
+        mat-flat-button
+        mat-dialog-close>
+
+        Close
+
+    </button>
+
+</div>

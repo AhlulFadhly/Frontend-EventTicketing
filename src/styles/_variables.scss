@@ -1,0 +1,44 @@
+// Colors (Material 3 Dynamic Palette dari file asli)
+$primary: #aac7ff;
+$on-primary: #003064;
+$primary-container: #3e90ff;
+$on-primary-container: #002957;
+$secondary: #74d1ff;
+$on-secondary: #003548;
+$secondary-container: #149ccb;
+$on-secondary-container: #002e3f;
+$tertiary: #ffb691;
+$surface: #10131b;
+$on-surface: #e0e2ed;
+$surface-variant: #31353d;
+$on-surface-variant: #c0c6d6;
+$surface-container-low: #181c23;
+$surface-container-lowest: #0b0e15;
+$accent-blue: #0A84FF;
+$white: #ffffff;
+$transparent: transparent;
+$tertiary-container: #eb6a12;
+$primary-fixed: #d6e3ff;
+$primary-fixed-dim:#aac7ff;
+$surface-dim: #10131b;
+$outline-variant: #414754;
+$surface-container-highest: #31353d;
+$surface-container-high: #31353d;
+$surface-container: #1c2027;
+
+
+// Typography Heights & Weights
+$font-family: 'Inter', sans-serif;
+
+// Spacing & Border Radius
+$radius-default: 1rem;
+$radius-lg: 2rem;
+$radius-xl: 3rem;
+$radius-full: 9999px;
+
+$padding-desktop: 64px;
+$padding-mobile: 24px;
+$gutter: 24px;
+$stack-sm: 12px;
+$stack-md: 24px;
+$stack-lg: 48px;

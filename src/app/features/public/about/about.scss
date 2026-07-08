@@ -1,0 +1,178 @@
+@use 'styles/variables' as v;
+@use 'styles/mixins' as m;
+
+.about-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #080808;
+  position: relative;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.about-page {
+  position: relative;
+  z-index: 10;
+  padding-top: 140px;
+  padding-bottom: 80px;
+}
+
+.ambient-blur {
+  position: absolute;
+  top: -5%;
+  left: 10%;
+  width: 65vw;
+  height: 55vh;
+  background: radial-gradient(circle, rgba(v.$primary, 0.08) 0%, transparent 70%);
+  filter: blur(140px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+// ABOUT GRID STRUCTURE
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: v.$gutter * 1.5;
+  padding: 0 24px;
+
+  @media (min-width: 992px) {
+    grid-template-columns: 320px 1fr;
+  }
+}
+
+// SIDEBAR USER PROFILE CARD
+.profile-card {
+  @include m.glass-panel;
+  background: rgba(v.$surface-container-high, 0.5);
+  border: 1px solid rgba(v.$white, 0.06);
+  border-radius: 24px;
+  padding: 40px 24px;
+  text-align: center;
+  position: sticky;
+  top: 140px;
+
+  &__avatar {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, v.$primary 0%, v.$accent-blue 100%);
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(v.$primary, 0.3);
+
+    span {
+      font-size: 28px;
+      font-weight: 700;
+      color: v.$white;
+      letter-spacing: 0.02em;
+    }
+  }
+
+  &__meta {
+    h2 { @include m.headline-lg; font-size: 24px; color: v.$white; font-weight: 700; }
+    .title-tag { font-size: 13px; color: v.$primary; font-weight: 600; margin-top: 6px; }
+  }
+
+  &__divider {
+    height: 1px;
+    background: rgba(v.$white, 0.06);
+    margin: 24px 0;
+  }
+}
+
+.contact-links {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: left;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: v.$on-surface-variant;
+  font-size: 13px;
+  text-decoration: none;
+  transition: color 0.2s;
+
+  mat-icon { font-size: 16px; width: 16px; height: 16px; color: rgba(v.$white, 0.3); }
+  &:hover {
+    color: v.$white;
+    mat-icon { color: v.$accent-blue; }
+  }
+}
+
+// CONTENT AREA STYLING
+.about-content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.glass-box {
+  @include m.glass-panel;
+  background: rgba(v.$surface-container, 0.25);
+  border: 1px solid rgba(v.$white, 0.06);
+  border-radius: 24px;
+  padding: 32px;
+
+  .box-title { @include m.headline-lg; font-size: 20px; color: v.$white; font-weight: 700; margin-bottom: 16px; border-left: 3px solid v.$primary; padding-left: 12px; }
+}
+
+.bio-text {
+  @include m.body-md;
+  color: v.$on-surface-variant;
+  line-height: 1.7;
+  opacity: 0.9;
+  margin-bottom: 14px;
+  &:last-child { margin-bottom: 0; }
+}
+
+.highlights-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+
+  @media (min-width: 1200px) {
+    grid-template-columns: 1.1fr 0.9fr;
+  }
+}
+
+// EXPERTISE LIST
+.expertise-list {
+  list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 20px;
+
+  li {
+    display: flex; gap: 16px;
+    mat-icon { color: v.$accent-blue; font-size: 22px; width: 22px; height: 22px; margin-top: 2px; }
+    h4 { font-size: 15px; font-weight: 600; color: v.$white; }
+    p { font-size: 13px; color: v.$on-surface-variant; margin-top: 4px; line-height: 1.5; }
+  }
+}
+
+// TRACK RECORD TIMELINE
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  padding-left: 20px;
+  border-left: 1px solid rgba(v.$white, 0.06);
+}
+
+.timeline-item {
+  position: relative;
+
+  .timeline-dot {
+    position: absolute; left: -25px; top: 4px; width: 9px; height: 9px; border-radius: 50%; background: #22c55e;
+    box-shadow: 0 0 8px #22c55e;
+  }
+
+  .timeline-date { font-size: 11px; font-weight: 700; color: v.$on-surface-variant; opacity: 0.6; }
+  h4 { font-size: 14px; font-weight: 600; color: v.$white; margin-top: 2px; }
+  .timeline-location { font-size: 12px; color: v.$primary; margin-top: 2px; }
+}

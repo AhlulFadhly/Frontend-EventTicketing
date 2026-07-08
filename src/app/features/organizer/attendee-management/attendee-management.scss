@@ -1,0 +1,17 @@
+@use 'styles/variables' as v;
+@use 'styles/mixins' as m;
+
+.sub-view {
+  animation: fadeIn 0.3s ease-in-out;
+  h3 { color: v.$white; margin-bottom: 16px; }
+}
+
+.premium-table {
+  width: 100%; border-collapse: collapse; text-align: left;
+  th { padding: 16px; border-bottom: 1px solid rgba(v.$white, 0.08); @include m.label-sm; color: v.$on-surface-variant; text-transform: uppercase; }
+  td { padding: 18px 16px; border-bottom: 1px solid rgba(v.$white, 0.04); @include m.body-md; font-size: 14px; color: v.$on-surface-variant; }
+}
+.table-responsive { width: 100%; overflow-x: auto; }
+.text-white { color: v.$white; }
+.text-primary { color: v.$primary; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }

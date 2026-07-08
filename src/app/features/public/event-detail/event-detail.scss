@@ -1,0 +1,501 @@
+@use 'styles/variables' as v;
+@use 'styles/mixins' as m;
+
+.detail-page {
+  position: relative;
+  padding-top: 100px;
+  padding-inline: 64px;
+  padding-bottom: v.$stack-lg * 2;
+  min-height: 100vh;
+}
+
+.ambient-glow {
+  position: absolute;
+  top: 5%;
+  left: 20%;
+  width: 60vw;
+  height: 40vh;
+  background: radial-gradient(circle, rgba(v.$accent-blue, 0.08) 0%, transparent 70%);
+  filter: blur(140px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+// 1. HERO BANNER DESIGN
+.hero-banner {
+  position: relative;
+  width: 100%;
+  height: 420px;
+  border-radius: v.$radius-default;
+  overflow: hidden;
+  margin-bottom: v.$stack-lg;
+  border: 1px solid rgba(v.$white, 0.08);
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+
+  @media (max-width: 768px) {
+    height: 280px;
+  }
+
+  &__image-container {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, v.$surface-container-lowest 0%, rgba(v.$surface-container-lowest, 0.5) 60%, transparent 100%);
+  }
+
+  &__content {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 40px;
+    gap: 16px;
+
+    @media (max-width: 768px) {
+      padding: 24px;
+    }
+  }
+
+  &__tags {
+    display: flex;
+    gap: 12px;
+  }
+
+  .badge-category {
+    padding: 6px 14px;
+    border-radius: v.$radius-full;
+    background: rgba(v.$white, 0.08);
+    border: 1px solid rgba(v.$white, 0.15);
+    color: v.$white;
+    @include m.label-sm;
+  }
+
+  .badge-status {
+    padding: 6px 14px;
+    border-radius: v.$radius-full;
+    background: rgba(v.$surface-variant, 0.4);
+    color: v.$on-surface-variant;
+    @include m.label-sm;
+
+    &--published {
+      background: rgba(v.$primary-container, 0.2);
+      color: v.$primary;
+      border: 1px solid rgba(v.$primary, 0.3);
+    }
+  }
+
+  &__title {
+    @include m.display-lg;
+    font-size: 48px;
+    font-weight: 800;
+    color: v.$white;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+
+    @media (max-width: 768px) {
+      font-size: 32px;
+    }
+  }
+}
+
+// 2. TWO-COLUMN SPLIT LAYOUT
+.detail-layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: v.$gutter * 1.5;
+  padding: 0 24px;
+
+  @media (min-width: 992px) {
+    grid-template-columns: 1fr 400px;
+  }
+
+  &__main {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+}
+
+// QUICK META DETAILS (DATE / LOCATION)
+.meta-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.meta-card {
+  @include m.glass-panel;
+  background: rgba(v.$white, 0.02);
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+
+  mat-icon {
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    color: v.$primary;
+  }
+
+  h4 {
+    @include m.label-md;
+    color: v.$white;
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+
+  p {
+    @include m.body-md;
+    color: v.$on-surface;
+    font-weight: 500;
+  }
+
+  .sub-text {
+    font-size: 13px;
+    color: v.$on-surface-variant;
+    margin-top: 2px;
+  }
+}
+
+// GENERAL ARTICLE INFO BOX
+.info-box {
+  @include m.glass-panel;
+  background: rgba(v.$white, 0.03);
+  border-radius: 24px;
+  padding: 32px;
+
+  &__title {
+    @include m.headline-lg;
+    font-size: 24px;
+    color: v.$white;
+    margin-bottom: 16px;
+  }
+
+  &__text {
+    @include m.body-lg;
+    color: v.$on-surface-variant;
+    line-height: 1.7;
+  }
+}
+
+// ORGANIZER PROFILE BOX
+.organizer-profile {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  &__avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: rgba(v.$primary, 0.1);
+    border: 1px solid rgba(v.$primary, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: v.$primary;
+  }
+
+  &__info {
+    h4 {
+      @include m.body-lg;
+      font-weight: 600;
+      color: v.$white;
+    }
+    p {
+      @include m.label-sm;
+      color: v.$on-surface-variant;
+      margin-top: 2px;
+    }
+  }
+}
+
+// 3. SIDEBAR TICKET LAYOUT (RIGHT)
+.sticky-sidebar {
+  position: sticky;
+  top: 100px; // Menjaga barisan tetap menempel rapi saat scroll desktop
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  .sidebar-title {
+    @include m.headline-lg;
+    font-size: 22px;
+    color: v.$white;
+  }
+}
+
+.tickets-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+// CARD STRUKTUR TIKET
+.ticket-card {
+  @include m.glass-panel;
+  background: rgba(v.$white, 0.03);
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+
+  &:hover:not(&--soldout) {
+    transform: translateY(-4px);
+    border-color: rgba(v.$white, 0.2);
+    background: rgba(v.$white, 0.05);
+  }
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    z-index: 1;
+  }
+
+  &__name {
+    font-size: 18px;
+    font-weight: 700;
+    color: v.$white;
+  }
+
+  &__remaining {
+    @include m.label-sm;
+    color: v.$primary;
+    margin-top: 4px;
+
+    &--alert {
+      color: v.$on-surface-variant;
+      opacity: 0.6;
+    }
+  }
+
+  &__price {
+    font-size: 22px;
+    font-weight: 700;
+    color: v.$white;
+  }
+
+  &__features {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1;
+
+    li {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      @include m.label-md;
+      font-size: 13px;
+      color: v.$on-surface-variant;
+
+      mat-icon {
+        font-size: 16px;
+        width: 16px;
+        height: 16px;
+        color: rgba(v.$white, 0.4);
+        margin-top: 1px;
+      }
+    }
+  }
+
+  &__btn {
+    width: 100%;
+    padding: 14px 0;
+    border-radius: 14px;
+    @include m.body-md;
+    font-weight: 700;
+    border: none;
+    background: rgba(v.$white, 0.08);
+    color: v.$white;
+    cursor: pointer;
+    z-index: 1;
+    transition: all 0.25s ease;
+
+    &:hover:not(:disabled) {
+      background: v.$white;
+      color: v.$surface-container-lowest;
+    }
+
+    &:disabled {
+      background: rgba(v.$white, 0.02);
+      color: rgba(v.$white, 0.2);
+      border: 1px solid rgba(v.$white, 0.04);
+      cursor: not-allowed;
+    }
+  }
+
+  // HIGHLIGHT TIKET VIP (GOLDEN / NEON SHINE)
+  &--vip {
+    border-color: rgba(v.$primary, 0.3);
+    background: linear-gradient(135deg, rgba(v.$primary, 0.04) 0%, rgba(v.$white, 0.01) 100%);
+
+    .ticket-card__name, .ticket-card__price {
+      color: v.$primary;
+    }
+
+    .ticket-card__features li mat-icon {
+      color: v.$primary;
+    }
+
+    .ticket-card__btn {
+      background: v.$primary;
+      color: v.$on-primary;
+      box-shadow: 0 8px 20px rgba(v.$primary-container, 0.2);
+
+      &:hover {
+        background: v.$white;
+        color: v.$surface-container-lowest;
+        box-shadow: 0 12px 24px rgba(v.$white, 0.3);
+      }
+    }
+  }
+
+  &__glow {
+    position: absolute;
+    top: -60px;
+    right: -60px;
+    width: 140px;
+    height: 140px;
+    background: radial-gradient(circle, rgba(v.$primary, 0.15) 0%, transparent 70%);
+    filter: blur(20px);
+    pointer-events: none;
+  }
+
+  // STYLING TIKET JIKA HABIS (SOLD OUT)
+  &--soldout {
+    opacity: 0.5;
+  }
+}
+
+
+.coming-soon-box {
+  @include m.glass-panel;
+  background: linear-gradient(135deg, rgba(v.$white, 0.04) 0%, rgba(v.$white, 0.01) 100%);
+  border-radius: 24px;
+  border-color: rgba(v.$white, 0.08);
+  padding: 40px 32px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+
+  &__glow {
+    position: absolute;
+    top: -40px;
+    width: 140px;
+    height: 140px;
+    background: radial-gradient(circle, rgba(v.$primary, 0.12) 0%, transparent 70%);
+    filter: blur(20px);
+    pointer-events: none;
+  }
+
+  &__icon-wrapper {
+    width: 64px;
+    height: 64px;
+    border-radius: v.$radius-full;
+    background: rgba(v.$white, 0.03);
+    border: 1px solid rgba(v.$white, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+
+    mat-icon {
+      font-size: 32px;
+      width: 32px;
+      height: 32px;
+      color: v.$primary;
+    }
+  }
+
+  &__title {
+    @include m.headline-lg;
+    font-size: 22px;
+    font-weight: 700;
+    color: v.$white;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+  }
+
+  &__desc {
+    @include m.body-md;
+    color: v.$on-surface-variant;
+    line-height: 1.6;
+    opacity: 0.8;
+  }
+
+  &__divider {
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(v.$white, 0.1), transparent);
+    margin: 24px 0;
+  }
+}
+
+.ticket-card--locked {
+  opacity: 0.65;
+  border-color: rgba(v.$white, 0.04);
+  
+  &:hover {
+    transform: none; // Mematikan efek hover terangkat jika terkunci
+    border-color: rgba(v.$white, 0.04);
+  }
+}
+
+.ticket-card__remaining--locked {
+  color: v.$tertiary !important; // Beri warna aksen kuning/amber soft penanda warning
+  font-weight: 500;
+}
+
+.ticket-card__countdown-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(v.$white, 0.02);
+  border: 1px solid rgba(v.$white, 0.05);
+  color: v.$on-surface-variant;
+  font-size: 13px;
+  font-weight: 500;
+
+  mat-icon {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    color: v.$tertiary;
+  }
+}

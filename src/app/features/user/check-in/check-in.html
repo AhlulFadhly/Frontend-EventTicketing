@@ -1,0 +1,82 @@
+<div class="page">
+
+    <mat-card>
+
+        <mat-card-header>
+
+            <mat-card-title>
+
+                Check In
+
+            </mat-card-title>
+
+            <mat-card-subtitle>
+
+                Event #{{ eventId }}
+
+            </mat-card-subtitle>
+
+        </mat-card-header>
+
+        <mat-card-content>
+
+            <mat-form-field appearance="outline" class="full-width">
+
+                <mat-label>
+
+                    Ticket Code
+
+                </mat-label>
+
+                <input
+                    matInput
+                    [(ngModel)]="ticketCode"
+                    placeholder="TCK-XXXXXXXX">
+
+            </mat-form-field>
+
+            @if(success){
+
+            <div class="success">
+
+                {{ success }}
+
+            </div>
+
+            }
+
+            @if(error){
+
+            <div class="error">
+
+                {{ error }}
+
+            </div>
+
+            }
+
+        </mat-card-content>
+
+        <mat-card-actions align="end">
+
+            <button
+                mat-flat-button
+                color="primary"
+                [disabled]="loading"
+                (click)="submit()">
+
+                <mat-icon>
+
+                    qr_code
+
+                </mat-icon>
+
+                Check In
+
+            </button>
+
+        </mat-card-actions>
+
+    </mat-card>
+
+</div>

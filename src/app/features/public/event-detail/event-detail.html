@@ -1,0 +1,140 @@
+@if (event) {
+<main class="detail-page max-container">
+  <div class="ambient-glow"></div>
+
+  <header class="hero-banner">
+    <div class="hero-banner__image-container">
+      <img [src]="event.banner" [alt]="event.title" class="hero-banner__img">
+      <div class="hero-banner__overlay"></div>
+    </div>
+
+    <div class="hero-banner__content">
+      <div class="hero-banner__tags">
+        <span class="badge-category">{{ event.category }}</span>
+        <span class="badge-status" [class.badge-status--published]="event.status === 'Published'">
+          {{ event.status }}
+        </span>
+      </div>
+      <h1 class="hero-banner__title">{{ event.title }}</h1>
+    </div>
+  </header>
+
+  <div class="detail-layout">
+
+    <section class="detail-layout__main">
+      <div class="meta-grid">
+        <div class="meta-card">
+          <mat-icon>calendar_today</mat-icon>
+          <div>
+            <h4>Date & Time</h4>
+            <p>{{ event.time | date:'EEEE, MMM dd, yyyy' }}</p>
+            <p class="sub-text">{{ event.time | date:'hh:mm a' }} WIB</p>
+          </div>
+        </div>
+
+        <div class="meta-card">
+          <mat-icon>location_on</mat-icon>
+          <div>
+            <h4>Venue Location</h4>
+            <p>{{ event.venue }}</p>
+            <p class="sub-text">{{ event.address }}, {{ event.city }}</p>
+          </div>
+        </div>
+      </div>
+
+      <article class="info-box">
+        <h3 class="info-box__title">About the Experience</h3>
+        <p class="info-box__text">{{ event.description }}</p>
+      </article>
+
+      <div class="info-box organizer-box">
+        <h3 class="info-box__title">Event Organizer</h3>
+        <div class="organizer-profile">
+          <div class="organizer-profile__avatar">
+            <mat-icon>business</mat-icon>
+          </div>
+          <div class="organizer-profile__info">
+            <h4>{{ event.organizer.fullName }}</h4>
+            <p>{{ event.organizer.email }}</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <aside class="detail-layout__sidebar">
+      <div class="sticky-sidebar">
+
+        <ng-container *ngIf="event.status === 'Published'">
+          <h3 class="sidebar-title">Select Tickets</h3>
+          <div class="tickets-stack">
+            <div *ngFor="let ticket of event.tickets" class="ticket-card"
+              [class.ticket-card--vip]="ticket.name.toLowerCase() === 'vip'"
+              [class.ticket-card--soldout]="ticket.soldOut || ticket.remaining === 0"
+              [class.ticket-card--locked]="isTicketLocked(ticket.saleStart)">
+
+              <div class="ticket-card__glow" *ngIf="ticket.name.toLowerCase() === 'vip'"></div>
+
+              <div class="ticket-card__header">
+                <div>
+                  <h4 class="ticket-card__name">{{ ticket.name }} Ticket</h4>
+
+                  <p class="ticket-card__remaining"
+                    *ngIf="ticket.remaining > 0 && !ticket.soldOut && !isTicketLocked(ticket.saleStart)">
+                    {{ ticket.remaining }} tickets left
+                  </p>
+                  <p class="ticket-card__remaining ticket-card__remaining--alert"
+                    *ngIf="(ticket.remaining === 0 || ticket.soldOut) && !isTicketLocked(ticket.saleStart)">
+                    Sold Out
+                  </p>
+
+                  <p class="ticket-card__remaining ticket-card__remaining--locked"
+                    *ngIf="isTicketLocked(ticket.saleStart)">
+                    Not Available Yet
+                  </p>
+                </div>
+                <span class="ticket-card__price">
+                  {{ ticket.price | currency:'IDR':'symbol-narrow':'1.0-0' }}
+                </span>
+              </div>
+
+              <ul class="ticket-card__features">
+                <li>
+                  <mat-icon>check</mat-icon>
+                  <span>Full access to bootcamp session</span>
+                </li>
+              </ul>
+
+              <div class="ticket-card__countdown-info" *ngIf="isTicketLocked(ticket.saleStart)">
+                <mat-icon>lock_clock</mat-icon>
+                <span>Starts on {{ ticket.saleStart | date:'MMM dd, yyyy • HH:mm' }} WIB</span>
+              </div>
+
+              <button class="ticket-card__btn" *ngIf="!isTicketLocked(ticket.saleStart)"
+                [disabled]="ticket.soldOut || ticket.remaining === 0" (click)="selectTicket(ticket)">
+                {{ (ticket.soldOut || ticket.remaining === 0) ? 'Sold Out' : 'Select Ticket' }}
+              </button>
+
+            </div>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="event.status !== 'Published'">
+          <div class="coming-soon-box">
+            <div class="coming-soon-box__glow"></div>
+            <div class="coming-soon-box__icon-wrapper">
+              <mat-icon>lock_clock</mat-icon>
+            </div>
+            <h3 class="coming-soon-box__title">Tickets Coming Soon</h3>
+            <p class="coming-soon-box__desc">
+              Sales haven't started yet. The organizer is currently preparing the exclusive ticket tiers for this event.
+            </p>
+            <div class="coming-soon-box__divider"></div>
+          </div>
+        </ng-container>
+
+      </div>
+    </aside>
+
+  </div>
+</main>
+}

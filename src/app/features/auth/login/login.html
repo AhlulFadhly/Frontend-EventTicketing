@@ -1,0 +1,97 @@
+<div class="auth-wrapper">
+  
+  <div class="auth-global-bg">
+    <div class="orb orb--primary"></div>
+    <div class="orb orb--secondary"></div>
+    <div class="mesh-pattern"></div>
+  </div>
+  
+  <div class="auth-content max-container">
+    
+    <section class="promo-panel">
+      <div class="promo-panel__content">
+        <div class="promo-panel__text">
+          <h1 class="promo-panel__title">
+            Experience Events<br><span class="text-gradient">Like Never Before</span>
+          </h1>
+          <p class="promo-panel__subtitle">
+            Discover concerts, conferences, festivals, workshops, and unforgettable experiences with one modern platform.
+          </p>
+        </div>
+
+        <div class="floating-grid">
+          <div class="float-card float-card--1">
+            <mat-icon class="icon-filled">music_note</mat-icon>
+            <span>Concert</span>
+          </div>
+          <div class="float-card float-card--2">
+            <mat-icon class="icon-filled">lightbulb</mat-icon>
+            <span>Workshop</span>
+          </div>
+          <div class="float-card float-card--3">
+            <mat-icon class="icon-filled">festival</mat-icon>
+            <span>Festival</span>
+          </div>
+          <div class="float-card float-card--4">
+            <mat-icon class="icon-filled">groups</mat-icon>
+            <span>Conference</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="form-panel">
+      <div class="auth-card">
+        <div class="auth-card__glow-line"></div>
+        
+        <div class="auth-card__header">
+          <div class="auth-card__logo-container">
+            <mat-icon class="icon-filled">diamond</mat-icon>
+          </div>
+          <h2 class="auth-card__title">Welcome Back</h2>
+          <p class="auth-card__subtitle">Sign in to access your upcoming events.</p>
+        </div>
+
+        <form class="auth-form" [formGroup]="loginForm" (ngSubmit)="login()">
+          
+          <div class="input-group">
+            <label class="input-group__label">Email Address</label>
+            <div class="input-field">
+              <mat-icon class="input-field__icon">mail</mat-icon>
+              <input type="email" class="input-field__input" placeholder="hello@luxeevents.com" formControlName="email">
+            </div>
+          </div>
+
+          <div class="input-group">
+            <label class="input-group__label">Password</label>
+            <div class="input-field">
+              <mat-icon class="input-field__icon">lock</mat-icon>
+              <input [type]="hidePassword ? 'password' : 'text'" class="input-field__input" placeholder="••••••••" formControlName="password">
+              <button type="button" class="input-field__toggle" (click)="hidePassword = !hidePassword" >
+                <mat-icon>{{ hidePassword ? 'visibility' : 'visibility_off' }}</mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <div class="auth-form__options">
+            <label class="custom-checkbox">
+              <input type="checkbox" class="custom-checkbox__input">
+              <span class="custom-checkbox__box"></span>
+              <span class="custom-checkbox__label">Remember me</span>
+            </label>
+            <a href="#" class="forgot-link">Forgot Password?</a>
+          </div>
+
+          <button type="submit" class="btn-submit" [disabled]="loading">
+            <span>Login</span>
+            <mat-icon>arrow_forward</mat-icon>
+          </button>
+        </form>
+        <p class="auth-card__footer">
+          Don't have an account? <a href="/register" class="signup-link">Sign Up</a>
+        </p>
+      </div>
+    </section>
+
+  </div>
+</div>

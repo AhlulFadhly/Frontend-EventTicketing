@@ -1,0 +1,43 @@
+<div class="data-box">
+  <div class="data-box__header">
+    <h3 class="data-box__title">Your Managed Events</h3>
+    <button class="btn-create" (click)="onCreateEvent.emit()">
+      <mat-icon>add</mat-icon>
+      <span>New Event</span>
+    </button>
+  </div>
+  
+  <div class="table-responsive">
+    <table class="premium-table">
+      <thead>
+        <tr>
+          <th>Event Name</th>
+          <th>Schedule</th>
+          <th>Location</th>
+          <th>Status</th>
+          <th class="text-right">Operation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="clickable-row" *ngFor="let event of events">
+          <td (click)="onSelectEvent.emit(event)">
+            <span class="font-semibold text-white">{{ event.title }}</span>
+          </td>
+          <td>{{ event.time | date:'MMM dd, yyyy • HH:mm' }} WIB</td>
+          <td>{{ event.venue }}</td>
+          <td><app-status-chip [status]="event.status"></app-status-chip></td>
+          <td class="text-right">
+            <div class="table-row-actions">
+              <button class="btn-icon-table" (click)="onEditEvent.emit(event)" title="Edit Event">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button class="btn-action-text" (click)="onSelectEvent.emit(event)">
+                Hub <mat-icon>arrow_right_alt</mat-icon>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

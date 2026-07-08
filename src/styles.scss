@@ -1,1 +1,53 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
+@import 'styles/variables';
+@import 'styles/mixins';
+
+/* ==========================================================
+   Angular Material Theme (Material 3)
+========================================================== */
+
+html {
+  @include mat.theme((
+    color: (
+      primary: mat.$azure-palette,
+      tertiary: mat.$blue-palette,
+    ),
+    typography: Inter,
+    density: 0,
+  ));
+}
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: #080808;
+  color: $on-surface;
+  font-family: $font-family;
+  @include body-md;
+  overflow-x: hidden;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.max-container {
+  max-width: 1440px;
+  margin: 0 auto;
+}

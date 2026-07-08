@@ -1,0 +1,486 @@
+@use 'styles/variables' as v;
+@use 'styles/mixins' as m;
+
+// WRAPPER ROOT (Membentang Penuh Menampung Background)
+.auth-wrapper {
+  display: flex;
+  width: 100vw;
+  min-height: 100vh;
+  background-color: #080808; 
+  overflow: hidden;
+  position: relative;
+}
+
+// ARSITEKTUR KONTEN DENGAN KLAS MAX-CONTAINER GLOBAL
+.auth-content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  position: relative;
+  z-index: 10;
+
+  @media (min-width: 768px) {
+    flex-direction: row; // Membagi kiri 55% & kanan 45%
+  }
+}
+
+// 1. GLOBAL BACKGROUND DESIGN
+.auth-global-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.orb {
+  position: absolute;
+  border-radius: v.$radius-full;
+  filter: blur(120px);
+  opacity: 0.35;
+
+  &--primary {
+    width: 650px;
+    height: 650px;
+    background: v.$primary;
+    top: -10%;
+    left: -5%;
+  }
+
+  &--secondary {
+    width: 550px;
+    height: 550px;
+    background: v.$secondary-container;
+    bottom: -10%;
+    left: 45%; 
+  }
+}
+
+.mesh-pattern {
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMSIgZmlsbD0iI2ZmZicvPjwvc3ZnPg==");
+}
+
+// 2. PROMO PANEL STYLE (SISI KIRI)
+.promo-panel {
+  width: 100%;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px v.$padding-mobile;
+  background: transparent;
+
+  @media (min-width: 768px) {
+    width: 55%;
+    min-height: 100vh;
+    padding: v.$padding-desktop;
+    justify-content: flex-start; // Merapatkan konten ke sisi kiri kontainer secara elegan
+  }
+
+  &__content {
+    width: 100%;
+    max-width: 540px; // Mencegah bentangan teks terlalu panjang di monitor lebar
+    display: flex;
+    flex-direction: column;
+    gap: v.$stack-lg;
+  }
+
+  &__title {
+    @include m.display-lg;
+    color: v.$white;
+
+    .text-gradient {
+      background: linear-gradient(135deg, v.$primary 0%, v.$secondary 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
+  &__subtitle {
+    @include m.body-lg;
+    color: v.$on-surface-variant;
+    margin-top: 16px;
+    opacity: 0.85;
+  }
+}
+
+// SHOWCASE CARDS DENGAN EFEK MENGAMBANG
+.floating-grid {
+  position: relative;
+  height: 280px;
+  width: 100%;
+  display: none;
+
+  @media (min-width: 768px) {
+    display: block;
+  }
+}
+
+.float-card {
+  @include m.glass-panel;
+  background: rgba(v.$white, 0.02);
+  border: 1px solid rgba(v.$white, 0.08);
+  border-radius: v.$radius-default;
+  padding: 24px;
+  width: 170px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  position: absolute;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+
+  mat-icon {
+    font-size: 36px;
+    width: 36px;
+    height: 36px;
+  }
+
+  span {
+    @include m.label-md;
+    color: v.$on-surface;
+    font-weight: 600;
+  }
+
+  &--1 {
+    top: 0; left: 0;
+    animation: float-up 10s ease-in-out infinite;
+    mat-icon { color: v.$primary; }
+  }
+  &--2 {
+    top: 30px; right: 30px;
+    animation: float-down 12s ease-in-out infinite;
+    mat-icon { color: v.$secondary; }
+  }
+  &--3 {
+    bottom: 0; left: 22%;
+    animation: float-up 14s ease-in-out infinite;
+    animation-delay: -3s;
+    mat-icon { color: v.$tertiary; }
+  }
+  &--4 {
+    bottom: 30px; right: 0;
+    animation: float-down 11s ease-in-out infinite;
+    animation-delay: -1s;
+    mat-icon { color: v.$primary-fixed-dim; }
+  }
+}
+
+// 3. FORM PANEL STYLE (SISI KANAN)
+.form-panel {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px v.$padding-mobile;
+  background: transparent;
+
+  @media (min-width: 768px) {
+    width: 45%;
+    min-height: 100vh;
+    padding: v.$padding-desktop;
+    justify-content: flex-end; // Memosisikan kartu form menempel simetris ke kanan kontainer
+  }
+}
+
+.auth-card {
+  @include m.glass-panel;
+  background: rgba(v.$surface-container, 0.4);
+  border-radius: 24px;
+  border: 1px solid rgba(v.$white, 0.06);
+  padding: 32px;
+  width: 100%;
+  max-width: 440px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.6);
+
+  @media (min-width: 768px) {
+    padding: 40px;
+  }
+
+  &__glow-line {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 2px;
+    background: linear-gradient(to right, transparent, rgba(v.$primary, 0.4), transparent);
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 32px;
+  }
+
+  &__logo-container {
+    width: 56px;
+    height: 56px;
+    border-radius: v.$radius-full;
+    background: rgba(v.$white, 0.04);
+    border: 1px solid rgba(v.$white, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 16px;
+
+    mat-icon {
+      font-size: 28px;
+      width: 28px;
+      height: 28px;
+      color: v.$white;
+    }
+  }
+
+  &__title {
+    @include m.headline-xl;
+    font-size: 28px;
+    color: v.$white;
+    font-weight: 700;
+  }
+
+  &__subtitle {
+    @include m.body-md;
+    color: v.$on-surface-variant;
+    margin-top: 6px;
+  }
+
+  &__footer {
+    text-align: center;
+    @include m.label-sm;
+    color: v.$on-surface-variant;
+    margin-top: 24px;
+
+    .signup-link {
+      color: v.$primary;
+      font-weight: 600;
+      text-decoration: none;
+      &:hover { text-decoration: underline; }
+    }
+  }
+}
+
+// FORMULIR & INPUT STRUKTUR
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  &__options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    @include m.label-md;
+
+    .forgot-link {
+      color: v.$primary;
+      text-decoration: none;
+      &:hover { color: v.$primary-container; }
+    }
+  }
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  &__label {
+    @include m.label-sm;
+    color: v.$on-surface-variant;
+    padding-left: 2px;
+  }
+}
+
+.input-field {
+  position: relative;
+  width: 100%;
+
+  &__icon {
+    position: absolute;
+    left: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: v.$on-surface-variant;
+    font-size: 20px;
+  }
+
+  &__input {
+    @include m.glass-input;
+    @include m.body-md;
+    width: 100%;
+    height: 48px;
+    border-radius: 14px;
+    padding-left: 48px;
+    padding-right: 16px;
+    color: v.$white;
+    box-sizing: border-box;
+
+    &::placeholder { color: rgba(v.$on-surface-variant, 0.4); }
+  }
+
+  &__toggle {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: v.$on-surface-variant;
+    background: none;
+    border: none;
+    cursor: pointer;
+    &:hover { color: v.$white; }
+
+    mat-icon { font-size: 20px; }
+  }
+
+  &:has(&__toggle) &__input {
+    padding-right: 48px;
+  }
+}
+
+// CUSTOM EMBEDDED CHECKBOX
+.custom-checkbox {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  position: relative;
+
+  &__input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+
+    &:checked ~ .custom-checkbox__box {
+      background-color: v.$primary;
+      border-color: v.$primary;
+
+      &::after { display: block; }
+    }
+  }
+
+  &__box {
+    width: 16px;
+    height: 16px;
+    border-radius: 4px;
+    border: 1px solid v.$outline-variant;
+    background: rgba(v.$white, 0.02);
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      display: none;
+      left: 5px; top: 2px;
+      width: 4px; height: 8px;
+      border: solid v.$surface-container-lowest;
+      border-width: 0 2px 2px 0;
+      transform: rotate(45deg);
+    }
+  }
+
+  &__label {
+    color: v.$on-surface-variant;
+    transition: color 0.2s;
+  }
+
+  &:hover &__label { color: v.$white; }
+}
+
+// CTA SUBMIT BUTTON
+.btn-submit {
+  width: 100%;
+  height: 48px;
+  border-radius: 14px;
+  background: v.$accent-blue;
+  color: v.$white;
+  @include m.label-md;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(10, 132, 255, 0.2);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  margin-top: 8px;
+
+  mat-icon { font-size: 18px; }
+
+  &:hover {
+    filter: brightness(1.1);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(10, 132, 255, 0.4);
+  }
+}
+
+// DIVIDER LAYOUT
+.divider {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 24px 0;
+
+  &__line {
+    height: 1px;
+    background: rgba(v.$white, 0.08);
+    flex: 1;
+  }
+  &__text {
+    @include m.label-sm;
+    color: rgba(v.$on-surface-variant, 0.6);
+    letter-spacing: 0.1em;
+  }
+}
+
+// SOCIAL ACTIONS BUTTONS
+.social-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn-social {
+  @include m.glass-btn;
+  width: 100%;
+  height: 48px;
+  border-radius: 14px;
+  background: rgba(v.$white, 0.03);
+  border: 1px solid rgba(v.$white, 0.06);
+  color: v.$on-surface;
+  @include m.label-md;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &__img { width: 18px; height: 18px; }
+  &__svg { width: 18px; height: 18px; }
+
+  &:hover {
+    background: rgba(v.$white, 0.08);
+    border-color: rgba(v.$white, 0.15);
+    transform: translateY(-2px);
+  }
+}
+
+// ANIMATION TIMELINES
+@keyframes float-up {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-16px) rotate(1.5deg); }
+}
+
+@keyframes float-down {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(12px) rotate(-1.5deg); }
+}
+
+.icon-filled {
+  font-variation-settings: 'FILL' 1;
+}

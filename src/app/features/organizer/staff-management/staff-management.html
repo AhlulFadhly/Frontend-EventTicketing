@@ -1,0 +1,23 @@
+<div class="sub-view">
+  <div class="staff-assignment">
+    <div class="staff-assignment__form">
+      <h3>Assign Operational Crew</h3>
+      <div class="inline-form">
+        <input type="email" class="glass-input-field" placeholder="crew-email@luxeevents.com" #emailInput  [(ngModel)]="email"> 
+        <button class="btn-assign" (click)="onAssign.emit(emailInput.value); emailInput.value=''" (click)="submit()">Assign Staff</button>
+      </div>
+    </div>
+    <div class="staff-assignment__list">
+      <h3>Active Operational Crews</h3>
+      <ul class="crew-list">
+        <li *ngFor="let staff of staffs">
+          <mat-icon>account_circle</mat-icon>
+          <div>
+            <p class="text-white">{{ staff.fullName }}</p>
+            <span>{{ staff.email }}</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

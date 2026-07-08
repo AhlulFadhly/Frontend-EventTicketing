@@ -1,0 +1,60 @@
+<main class="events-page max-container">
+  <div class="glow-bg"></div>
+
+  <header class="events-header">
+    <h1 class="events-header__title">Explore <span class="text-gradient">Premium Events</span></h1>
+    <p class="events-header__subtitle">Find and book the most exclusive experiences happening around you.</p>
+
+    <div class="search-wrapper">
+      <span class="material-symbols-outlined search-wrapper__icon">
+
+      </span>
+
+      <input type="text" class="search-wrapper__input" placeholder="Search by event name, artist, or venue..."
+        [formControl]="searchControl">
+    </div>
+
+    <div class="categories-chips hide-scrollbar">
+
+      <button class="chip" [class.chip--active]="category === ''" (click)="onCategoryChange('')">
+        All Events
+      </button>
+
+      <button *ngFor="let item of categories" class="chip" [class.chip--active]="category === item.name"
+        (click)="onCategoryChange(item.name)">
+        {{ item.name }}
+      </button>
+
+    </div>
+  </header>
+
+  <section class="events-grid">
+    @for(event of page?.content; track event.id){
+    <div class="card" [routerLink]="['/events',event.id]">
+      <div class="card__image-wrapper">
+        <div class="card__image">
+          <img [src]="event.banner || 'https://placehold.co/1200x600'" alt="event banner" />
+        </div>
+        <div class="card__badge"><span>{{ event.category }}</span></div>
+      </div>
+      <div class="card__content">
+        <h3 class="card__title">{{ event.title }}</h3>
+
+        <div class="card__details">
+          <div class="card__info">
+            <mat-icon>calendar_today</mat-icon>
+            <span>{{ event.time | date:'MMM dd, yyyy' }}</span>
+          </div>
+          <div class="card__info">
+            <mat-icon>location_on</mat-icon>
+            <span>{{ event.venue }}</span>
+          </div>
+          <div class="card__info">
+            <app-status-chip [status]="event.status"></app-status-chip>
+          </div>
+        </div>
+      </div>
+    </div>
+    }
+  </section>
+</main>

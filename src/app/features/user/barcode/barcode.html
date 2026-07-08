@@ -1,0 +1,35 @@
+<div class="modal-overlay" (click)="onClose.emit()">
+  <div class="modal-card modal-card--barcode" (click)="$event.stopPropagation()">
+
+    <div class="modal-card__header">
+      <div class="header-text">
+        <h2>Gate Access Ticket</h2>
+        <p>{{ eventTitle }}</p>
+      </div>
+      <button class="btn-close-modal" (click)="onClose.emit()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+
+    <div class="modal-card__body">
+      <div class="barcode-container">
+        <div class="scanner-line"></div>
+
+        <div class="barcode-graphic">
+          <qrcode [qrdata]="invoiceId" class="huge-qr"></qrcode>
+        </div>
+      </div>
+
+      <div class="invoice-display">
+        <span class="label">Booking Invoice Reference</span>
+        <h3 class="code">{{ invoiceId }}</h3>
+      </div>
+    </div>
+
+    <div class="modal-card__footer">
+      <mat-icon>security</mat-icon>
+      <p>Do not share this code. Present this barcode to the gate officer for seamless check-in verification.</p>
+    </div>
+
+  </div>
+</div>

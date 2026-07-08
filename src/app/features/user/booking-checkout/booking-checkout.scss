@@ -1,0 +1,206 @@
+@use 'styles/variables' as v;
+@use 'styles/mixins' as m;
+
+.checkout-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #080808;
+  position: relative;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+.checkout-page {
+  position: relative;
+  z-index: 10;
+  padding-inline: 64px;
+  padding-top: 140px;
+  padding-bottom: 64px;
+}
+
+.ambient-blur {
+  position: absolute;
+  top: -10%;
+  left: 20%;
+  width: 60vw;
+  height: 50vh;
+  background: radial-gradient(circle, rgba(v.$accent-blue, 0.1) 0%, transparent 70%);
+  filter: blur(140px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.btn-back {
+  display: inline-flex; align-items: center; gap: 8px; background: transparent; border: none;
+  color: v.$primary; @include m.label-md; cursor: pointer; margin-bottom: 32px; transition: color 0.2s;
+  &:hover { color: v.$white; }
+  mat-icon { font-size: 18px; width: 18px; height: 18px; }
+}
+
+// MULTI-COLUMN CHECKOUT GRID
+.checkout-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: v.$gutter * 1.5;
+
+  @media (min-width: 992px) {
+    grid-template-columns: 1fr 380px;
+  }
+}
+
+.checkout-main {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.glass-box {
+  @include m.glass-panel;
+  background: rgba(v.$surface-container, 0.25);
+  border: 1px solid rgba(v.$white, 0.06);
+  border-radius: 24px;
+  padding: 32px;
+
+  .box-title { @include m.headline-lg; font-size: 22px; color: v.$white; font-weight: 700; margin-bottom: 8px; }
+  .box-subtitle { @include m.body-md; font-size: 14px; color: v.$on-surface-variant; margin-bottom: 24px; }
+}
+
+// STEP 1: TICKET QUANTITY COMPONENT
+.ticket-review {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-top: 16px;
+
+  h3 { font-size: 18px; color: v.$white; font-weight: 600; margin-top: 8px; }
+  .price-per-ticket { font-size: 14px; color: v.$primary; margin-top: 4px; font-weight: 500; }
+}
+
+.badge-tier {
+  padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 700; background: rgba(v.$white, 0.05); color: v.$white; border: 1px solid rgba(v.$white, 0.08);
+  &--vip { background: rgba(v.$primary, 0.1); color: v.$primary; border-color: rgba(v.$primary, 0.15); }
+}
+
+.quantity-counter {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(0, 0, 0, 0.3);
+  padding: 6px;
+  border-radius: 14px;
+  border: 1px solid rgba(v.$white, 0.04);
+
+  .qty-value { font-size: 18px; font-weight: 700; color: v.$white; min-width: 24px; text-align: center; }
+}
+
+.btn-counter {
+  width: 36px; height: 36px; border-radius: 10px; background: rgba(v.$white, 0.04); border: 1px solid rgba(v.$white, 0.06); color: v.$white; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  &:hover:not(:disabled) { background: rgba(v.$white, 0.1); border-color: rgba(v.$white, 0.2); }
+  &:disabled { opacity: 0.2; cursor: not-allowed; }
+  mat-icon { font-size: 18px; width: 18px; height: 18px; }
+}
+
+// STEP 2: METODE PEMBAYARAN CARDS
+.payment-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.payment-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  border-radius: 16px;
+  background: rgba(v.$white, 0.01);
+  border: 1px solid rgba(v.$white, 0.05);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  position: relative;
+
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    
+    .pay-icon { font-size: 28px; width: 28px; height: 28px; color: v.$on-surface-variant; }
+    h4 { font-size: 15px; font-weight: 600; color: v.$white; }
+    p { font-size: 12px; color: v.$on-surface-variant; margin-top: 2px; }
+  }
+
+  .select-indicator {
+    width: 18px; height: 18px; border-radius: 50%; border: 2px solid v.$outline-variant; position: relative;
+    &::after { content: ''; width: 8px; height: 8px; border-radius: 50%; background: v.$accent-blue; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); transition: transform 0.2s; }
+  }
+
+  &:hover { background: rgba(v.$white, 0.03); border-color: rgba(v.$white, 0.1); }
+
+  &--selected {
+    background: rgba(v.$accent-blue, 0.03);
+    border-color: rgba(v.$accent-blue, 0.3);
+
+    .pay-icon { color: v.$accent-blue; }
+    .select-indicator { border-color: v.$accent-blue; &::after { transform: translate(-50%, -50%) scale(1); } }
+  }
+}
+
+.hide-radio { position: absolute; opacity: 0; pointer-events: none; }
+
+// ASIDE INVOICE SUMMARY PANEL
+.invoice-card {
+  @include m.glass-panel;
+  background: rgba(v.$surface-container-high, 0.6);
+  border: 1px solid rgba(v.$white, 0.08);
+  border-radius: 24px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+
+  &__glow { position: absolute; top: -50px; right: -50px; width: 120px; height: 120px; background: radial-gradient(circle, rgba(v.$accent-blue, 0.1) 0%, transparent 70%); filter: blur(15px); }
+  .invoice-title { font-size: 18px; font-weight: 700; color: v.$white; }
+}
+
+.invoice-details {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.invoice-row {
+  display: flex;
+  justify-content: space-between;
+  @include m.body-md;
+  font-size: 14px;
+  color: v.$on-surface-variant;
+
+  &--total {
+    color: v.$white;
+    font-weight: 600;
+    margin-top: 4px;
+    .total-price { font-size: 20px; font-weight: 700; color: v.$white; }
+  }
+}
+
+.invoice-divider { height: 1px; background: rgba(v.$white, 0.06); margin: 4px 0; }
+
+// BUTTON SUBMISSIONS
+.btn-checkout-action {
+  width: 100%; height: 48px; border-radius: 14px; background: rgba(v.$white, 0.08); color: v.$white; @include m.label-md; font-weight: 600; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.25s ease;
+  &:hover { background: v.$white; color: v.$surface-container-lowest; }
+  mat-icon { font-size: 18px; width: 18px; height: 18px; }
+
+  &--pay {
+    background: v.$accent-blue;
+    box-shadow: 0 4px 14px rgba(10, 132, 255, 0.2);
+    &:hover { background: v.$white; color: v.$surface-container-lowest; box-shadow: 0 8px 24px rgba(255, 255, 255, 0.2); }
+  }
+}
+
+.text-success { color: v.$secondary !important; font-weight: 600; }

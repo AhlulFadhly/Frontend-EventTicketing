@@ -1,0 +1,120 @@
+@use 'styles/variables' as v;
+@use 'styles/mixins' as m;
+
+.navbar {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 50;
+  background: rgba(v.$surface, 0.5);
+  backdrop-filter: blur(40px);
+  border-bottom: 1px solid rgba(v.$white, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+
+  &__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem v.$padding-desktop;
+    
+    @media (max-width: 768px) {
+      padding: 1rem v.$padding-mobile;
+    }
+  }
+
+  &__logo-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  &__logo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+  }
+
+  &__title {
+    @include m.headline-lg;
+    font-weight: bold;
+    letter-spacing: -0.05em;
+    color: v.$on-surface;
+  }
+
+  &__links {
+    display: none;
+    align-items: center;
+    gap: 16px; // Disesuaikan untuk pembungkus mat-button
+
+    @media (min-width: 768px) {
+      display: flex;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  // Gaya untuk tombol User yang aktif (Logged In State)
+  &__btn-user {
+    &.mat-mdc-button {
+      @include m.label-md;
+      color: v.$on-surface !important;
+      background: rgba(v.$white, 0.05);
+      border: 1px solid rgba(v.$white, 0.1);
+      border-radius: v.$radius-full !important;
+      padding: 0 16px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      
+      &:hover {
+        background: rgba(v.$white, 0.1);
+      }
+    }
+  }
+
+  &__user-icon {
+    color: v.$primary;
+    margin-right: 4px;
+  }
+
+  &__arrow-icon {
+    font-size: 18px !important;
+    width: 18px !important;
+    height: 18px !important;
+    margin-left: 4px;
+    opacity: 0.7;
+  }
+}
+
+// STYLING KHUSUS DROP DOWN MENU (MAT-MENU OVERRIDE)
+// Gunakan selector global / ditaruh di styles.scss jika enkapsulasi komponen memblokir ini
+::ng-deep .mat-mdc-menu-panel.luxe-menu {
+  background: rgba(v.$surface, 0.5) !important;
+  backdrop-filter: blur(25px) !important;
+  -webkit-backdrop-filter: blur(40px) !important;
+  border: 1px solid rgba(v.$white, 0.1) !important;
+  border-radius: v.$radius-default !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+  margin-top: 8px;
+
+  .mat-mdc-menu-item {
+    color: v.$on-surface-variant !important;
+    font-family: v.$font-family;
+    @include m.label-md;
+    
+    .mat-icon {
+      color: v.$primary !important;
+      margin-right: 12px;
+    }
+
+    &:hover {
+      background: rgba(v.$white, 0.05) !important;
+      color: v.$white !important;
+    }
+  }
+}
