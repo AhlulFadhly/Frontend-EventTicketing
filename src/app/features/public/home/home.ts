@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { MatButtonModule } from '@angular/material/button';
 import { Event } from '../../organizer/models/event.model';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +13,7 @@ import { Event } from '../../organizer/models/event.model';
     MatIconModule,
     CommonModule,
     MatButtonModule,
+    RouterLink
   ],
   templateUrl: './home.html',
   styleUrl: './home.scss',

@@ -79,7 +79,7 @@
 
     <div class="featured__grid">
       @for (event of page?.content?.slice(0, 4); track event.id){
-      <div class="card">
+      <div class="card" [routerLink]="['/events',event.id]">
         <div class="card__image-wrapper">
           <div class="card__image ">
             <img [src]="event.banner || 'https://placehold.co/1200x600'" alt="event banner" />
